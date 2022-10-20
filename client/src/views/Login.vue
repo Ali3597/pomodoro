@@ -53,7 +53,7 @@ const { value: passwordValue, errorMessage: passwordError } = useField('password
 </template>
 
 
-<style scoped lang="scss" >
+<style scoped lang="css" >
 .card {
     width: 100%;
     width: 500px;

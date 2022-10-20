@@ -12,7 +12,7 @@ const userStore = useUser()
 </template>
 
 
-<style scoped lang="scss" >
+<style scoped lang="css" >
 .card {
     width: 100%;
     max-width: 300px;
