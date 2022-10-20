@@ -5,7 +5,7 @@ const port = process.env.PORT || '8000';
 const router = require('./routes');
 
 require('./database');
-
+require("./config/jwt.config");
 const app = express();
 app.use(express.static('../client-build'));
 app.use(express.json());

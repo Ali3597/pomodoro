@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { toFormValidator } from '@vee-validate/zod';
 import { useField, useForm } from 'vee-validate';
 import type { UserForm } from '@/shared/interfaces';
-import { createUser } from '@/shared/services/user.service';
+import { signup } from '@/shared/services/auth.service';
 
 const validationSchema = toFormValidator(z.object({
     name: z.string({ required_error: 'Vous devez renseigner ce champ' }).min(2, 'Trop court'),
@@ -17,7 +17,7 @@ const { handleSubmit, setErrors } = useForm({
 
 const submit = handleSubmit(async (formValue: UserForm) => {
     try {
-        await createUser(formValue);
+        await signup(formValue);
     } catch (e) {
         console.log(e);
     }

@@ -1,9 +1,9 @@
-import type { LoginForm, User } from "../interfaces";
+import type { LoginForm, User, UserForm } from "../interfaces";
 
 const BASE_URL = '/api/auth';
 
 export async function login(loginForm: LoginForm): Promise<User> {
-    const response = await fetch(BASE_URL, {
+    const response = await fetch(`${BASE_URL}/login`, {
         method: "POST",
         body: JSON.stringify(loginForm),
         headers: {
@@ -18,7 +18,31 @@ export async function login(loginForm: LoginForm): Promise<User> {
 }
 
 export async function logout() {
-    await fetch(BASE_URL, {
-        method: 'DELETE',
+    await fetch(`${BASE_URL}/logout`, {
+        method: 'GET',
     });
+}
+
+
+export async function signup(userForm: UserForm) {
+    try {
+        const response = await fetch(`${BASE_URL}/signup`, {
+            method: 'POST',
+            body: JSON.stringify(userForm),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw await response.json();
+        }
+    } catch (e) {
+        throw e;
+    }
+}
+
+export async function me(): Promise<User | null> {
+    return await (await fetch(`${BASE_URL}/me`)).json();
 }
