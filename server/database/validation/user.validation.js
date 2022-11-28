@@ -5,7 +5,7 @@ const userInfoValidation = Joi.object({
     "string.base": "Veuillez renseignez un email valide",
     "string.email": "Veuillez renseignez un email valide",
   }),
-  username: Joi.string().min(1).required().messages({
+  name: Joi.string().min(1).required().messages({
     "string.base": "Le  nom n'est pas valide",
     "string.empty": "Vous n' avez pas de nom ",
     "sting.min": "Votre nom est trop court",
@@ -14,12 +14,12 @@ const userInfoValidation = Joi.object({
 
 const userPasswordValidation = Joi.object({
   password: Joi.string()
-    .pattern(new RegExp("^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$"))
+    .min(6)
     .required()
     .messages({
       "string.base": "Veuillez renseignez un mot de passe",
       "string.pattern.base":
-        "Le mot de passe doit contenir au moint une lettre , un nombre et être au minimum de 8 caractères",
+        "Le mot de passe doit  être au minimum de 6 caractères",
     }),
 });
 
@@ -30,18 +30,19 @@ const userSignupValidation = Joi.object({
 
     "string.email": "Veuillez renseignez un email valide",
   }),
-  username: Joi.string().min(1).required().messages({
+  name: Joi.string().min(1).required().messages({
     "string.base": "Le  nom n'est pas valide",
     "string.empty": "Vous n' avez pas de nom pour ce client",
     "sting.min": "Votre nom est trop court",
   }),
+ 
   password: Joi.string()
-    .pattern(new RegExp("^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$"))
+  .min(6)
     .required()
     .messages({
       "string.base": "Veuillez renseignez un mot de passe",
       "string.pattern.base":
-        "Le mot de passe doit contenir au moint une lettre , un nombre et être au minimum de 8 caractères",
+        "Le mot de passe doit être au minimum de 6 caractères",
     }),
 });
 

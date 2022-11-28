@@ -1,8 +1,8 @@
 const secret = process.env.SECRETJWT;
 const jwt = require("jsonwebtoken");
 const { findUserPerId } = require("../queries/user.queries");
-const { keyPub } = require('../env/keys');
-const { app } = require("../app");
+const { key } = require('../env/keys');
+const { app } = require("../index");
 
 const createJwtToken = ({ user = null, id = null }) => {
   const jwtToken = jwt.sign(
@@ -10,13 +10,13 @@ const createJwtToken = ({ user = null, id = null }) => {
       sub: id || user._id.toString(),
       exp: Math.floor(Date.now() / 1000) + 5,
     },
-    secret
+    key
   );
   return jwtToken;
 };
 
 const decodeJwtToken = (token) => {
-  return jwt.verify(token, keyPub);
+  return jwt.verify(token, key);
 };
 
 exports.decodeJwtToken = decodeJwtToken;
@@ -31,7 +31,7 @@ const checkExpirationToken = (token, res) => {
   } else if (nowInSec > tokenExp && nowInSec - tokenExp < 60 * 60 * 24) {
     const refreshedToken = createJwtToken({ id: token.sub });
     res.cookie("jwt", refreshedToken);
-    return jwt.verify(refreshedToken, keyPub);
+    return jwt.verify(refreshedToken, key);
   } else {
     throw new Error("token expired");
   }
@@ -41,7 +41,7 @@ const extractUserFromToken = async (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
     try {
-      let decodedToken = jwt.verify(token, keyPub, { ignoreExpiration: true });
+      let decodedToken = jwt.verify(token, key, { ignoreExpiration: true });
       decodedToken = checkExpirationToken(decodedToken, res);
       const user = await findUserPerId(decodedToken.sub);
       if (user) {
@@ -49,11 +49,11 @@ const extractUserFromToken = async (req, res, next) => {
         next();
       } else {
         res.clearCookie("jwt");
-        res.redirect("/");
+        res.json(null)
       }
     } catch (e) {
       res.clearCookie("jwt");
-      res.redirect("/");
+      res.json(null)
     }
   } else {
     next();

@@ -44,5 +44,14 @@ export async function signup(userForm: UserForm) {
 }
 
 export async function me(): Promise<User | null> {
-    return await (await fetch(`${BASE_URL}/me`)).json();
+    
+    const test =  await (await fetch(`${BASE_URL}/me`,{
+        credentials: "include",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })).json()
+
+
+    return test ;
 }

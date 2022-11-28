@@ -2,9 +2,10 @@ const { findUserPerEmail, createUser } = require("../queries/user.queries");
 const {
   userSignupValidation,
 } = require("../database/validation/user.validation");
+const { use } = require("bcrypt/promises");
 
 exports.login = async (req, res, next) => {
-  try {
+  // try {
     const { email, password } = req.body;
 
     const user = await findUserPerEmail(email);
@@ -13,23 +14,29 @@ exports.login = async (req, res, next) => {
       const match = await user.comparePassword(password);
       if (match) {
         req.login(user);
-        res.json(user);
+        let userToSend =  { ...user._doc };
+        delete userToSend.local.password;
+        res.json(userToSend);
       } else {
         res.status(404).json( "Mauvais identifiants" );
       }
     } else {
     res.status(404).json( "Mauvais identifiants" );
     }
-  } catch (e) {
-    res.status(404).json( "error" );
-  }
+  // } catch (e) {
+  //   res.status(404).json( "error" );
+  // }
 };
 
 exports.me = async (req, res) => {
   try {
     if (req.user) {
+  
       let user = { ...req.user._doc };
+     
       delete user.local.password;
+
+
       res.json(user);
     } else {
       res.json(null);
@@ -50,17 +57,21 @@ exports.signout = async (req, res, next) => {
 
 
 exports.signup = async (req, res, next) => {
+
     try {
     await userSignupValidation.validateAsync(req.body, { abortEarly: false });
     const body = req.body;
     const user = await createUser(body);
     res.json(null);
-  } catch (e) {
+    } catch (e) {
+    console.log(e)
     const errorsMessage = [];
     if (e.isJoi) {
       e.details.map((error) => {
         errorsMessage.push({ field: error.path[0], message: error.message });
       });
+    } else {
+        errorsMessage.push({ field: "error", message: e })
     }
     res.status(400).send({ errors: errorsMessage });
   }

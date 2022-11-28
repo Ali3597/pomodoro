@@ -76,7 +76,6 @@ export const useTask = defineStore('task', {
                 done_at: null 
             }
             this.tasks.push(newTask)
-            console.log(this.tasks,"mes taches")
           },
 
           editTask(id:string,task:TaskFormInterface) {
@@ -115,7 +114,6 @@ export const useTask = defineStore('task', {
      
         toggleDoneTask(id: string) {
             let task = this.tasks.find(element => element._id == id)
-            console.log(task)
             if (task) {
                 if (!task.done_at) {
                      task.done_at = new Date()

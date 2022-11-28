@@ -13,7 +13,7 @@ exports.createUser = async (user) => {
     const hashedPassword = await User.hashPassword(user.password);
     // to create number
     const newUser = new User({
-      username: user.username,
+      name: user.name,
       local: {
         email: user.email,
         password: hashedPassword,
