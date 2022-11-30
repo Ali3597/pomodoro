@@ -1,4 +1,6 @@
-exports.requireAuth = (req, res, next) => {
+import { NextFunction, Request, Response } from "express";
+
+export const requireAuth = (req:Request, res:Response, next:NextFunction) => {
   if (req.isAuthenticated()) {
     next();
   } else {
@@ -6,7 +8,7 @@ exports.requireAuth = (req, res, next) => {
   }
 };
 
-exports.notRequireAuth = (req, res, next) => {
+export const notRequireAuth = (req:Request, res:Response, next:NextFunction) => {
   if (!req.isAuthenticated()) {
     next();
   } else {

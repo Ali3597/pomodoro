@@ -1,13 +1,13 @@
-const router = require("express").Router();
-const { login, signout, me,signup } = require("../controllers/auth.controller");
-const {
-  requireAuth,
-  notRequireAuth,
-} = require("../middleware/AuthMiddleware");
+import { Router } from "express";
+import { login, signout, me,signup }  from "../controllers/auth.controller";
+
+const router = Router();
+
+import  {requireAuth,notRequireAuth} from "../middleware/AuthMiddleware";
 
 router.post("/login", notRequireAuth, login);
 router.get("/logout", requireAuth, signout);
 router.get("/me", me);
 router.post("/signup",notRequireAuth, signup);
 
-module.exports = router;
+export default router;

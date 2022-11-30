@@ -1,43 +1,35 @@
-const { findUserPerEmail, createUser } = require("../queries/user.queries");
-const {
-  userSignupValidation,
-} = require("../database/validation/user.validation");
-const { use } = require("bcrypt/promises");
+import  { findUserPerEmail, createUser } from "../queries/user.queries";
+import  {userSignupValidation} from "../database/validation/user.validation";
+import { NextFunction, Request, Response } from "express";
+import  { ValidationError } from "joi";
 
-exports.login = async (req, res, next) => {
-  // try {
+
+export const login = async (req:Request, res:Response, _:NextFunction) => {
+  try {
     const { email, password } = req.body;
 
     const user = await findUserPerEmail(email);
 
     if (user) {
-      const match = await user.comparePassword(password);
+      const match =  user.comparePassword(password);
       if (match) {
         req.login(user);
-        let userToSend =  { ...user._doc };
-        delete userToSend.local.password;
-        res.json(userToSend);
+        res.json(user);
       } else {
         res.status(404).json( "Mauvais identifiants" );
       }
     } else {
     res.status(404).json( "Mauvais identifiants" );
     }
-  // } catch (e) {
-  //   res.status(404).json( "error" );
-  // }
+  } catch (e) {
+    res.status(404).json( "error" );
+  }
 };
 
-exports.me = async (req, res) => {
+export const me = async (req:Request, res:Response) => {
   try {
     if (req.user) {
-  
-      let user = { ...req.user._doc };
-     
-      delete user.local.password;
-
-
-      res.json(user);
+      res.json(req.user);
     } else {
       res.json(null);
     }
@@ -46,7 +38,7 @@ exports.me = async (req, res) => {
   }
 };
 
-exports.signout = async (req, res, next) => {
+export const signout = async (req:Request, res:Response, _:NextFunction) => {
   try {
     req.logout();
     res.status(204).send();
@@ -56,17 +48,17 @@ exports.signout = async (req, res, next) => {
 };
 
 
-exports.signup = async (req, res, next) => {
+export const signup = async (req:Request, res:Response, _:NextFunction) => {
 
     try {
     await userSignupValidation.validateAsync(req.body, { abortEarly: false });
     const body = req.body;
     const user = await createUser(body);
-    res.json(null);
+    req.login(user);
+    res.json(user)
     } catch (e) {
-    console.log(e)
     const errorsMessage = [];
-    if (e.isJoi) {
+    if (e instanceof ValidationError) {
       e.details.map((error) => {
         errorsMessage.push({ field: error.path[0], message: error.message });
       });

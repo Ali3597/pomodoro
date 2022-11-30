@@ -1,4 +1,4 @@
-const Joi = require("joi");
+import  Joi from "joi";
 
 const userInfoValidation = Joi.object({
   email: Joi.string().email().required().messages({
@@ -46,7 +46,7 @@ const userSignupValidation = Joi.object({
     }),
 });
 
-module.exports = {
+export  {
   userInfoValidation,
   userPasswordValidation,
   userSignupValidation,

@@ -1,28 +1,25 @@
-const User = require("../database/models/user.model");
+import {User} from "../database/models/user.model";
+import {UserForm } from "../interfaces";
 
-exports.findUserPerEmail = (email) => {
+export const findUserPerEmail = (email:string) => {
   return User.findOne({ "local.email": email }).exec();
 };
 
-exports.findUserPerId = (id) => {
+export const findUserPerId = (id:string) => {
   return User.findById(id).exec();
 };
 
-exports.createUser = async (user) => {
+export const createUser= async (user :UserForm) => {
   try {
-    const hashedPassword = await User.hashPassword(user.password);
-    // to create number
-    const newUser = new User({
+    const hashedPassword =  User.hashPassword(user.password);
+    const newUser  = new User({
       name: user.name,
       local: {
         email: user.email,
         password: hashedPassword,
       },
     });
-    const toreturn = await newUser.save();
-    let userObject = toreturn.toObject();
-    delete userObject.local.password;
-    return userObject;
+    return await newUser.save();
   } catch (e) {
     throw e;
   }

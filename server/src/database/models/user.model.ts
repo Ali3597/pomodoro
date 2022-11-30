@@ -1,16 +1,16 @@
-const mongoose = require('mongoose');
-const bcrypt = require("bcrypt");
+import  mongoose from 'mongoose';
+import  bcrypt from "bcrypt";
+import { UserModel,IUser } from '../../interfaces';
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema<IUser,UserModel>({
     name: { type: String, required: true, unique: true },
     local: {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, default: "basic" },
   },
 });
 
-userSchema.statics.hashPassword = async (password) => {
+userSchema.statics.hashPassword = async (password:string) => {
   try {
     const salt = await bcrypt.genSalt(10);
     return bcrypt.hash(password, salt);
@@ -19,10 +19,9 @@ userSchema.statics.hashPassword = async (password) => {
   }
 };
 
-userSchema.methods.comparePassword = function (password) {
+userSchema.methods.comparePassword = function (password:string) {
   return bcrypt.compareSync(password, this.local.password);
 };
 
-const UserModel = mongoose.model('user', userSchema);
+export const User = mongoose.model<IUser, UserModel>('User', userSchema);
 
-module.exports = UserModel;
