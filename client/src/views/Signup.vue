@@ -4,6 +4,12 @@ import { toFormValidator } from '@vee-validate/zod';
 import { useField, useForm } from 'vee-validate';
 import type { UserForm } from '@/shared/interfaces';
 import { signup } from '@/shared/services/auth.service';
+import { useRouter } from 'vue-router';
+import { useUser } from '@/shared/stores/userStore';
+
+
+const router = useRouter();
+const userStore = useUser();
 
 const validationSchema = toFormValidator(z.object({
     name: z.string({ required_error: 'Vous devez renseigner ce champ' }).min(2, 'Trop court'),
@@ -17,7 +23,8 @@ const { handleSubmit, setErrors } = useForm({
 
 const submit = handleSubmit(async (formValue: UserForm) => {
     try {
-        await signup(formValue);
+        await userStore.signup(formValue);
+        router.push('/profil');
     } catch (e) {
         console.log(e);
     }

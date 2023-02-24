@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import type { LoginForm, User } from '../interfaces';
-import { me, login, logout } from '../services';
+import type { LoginForm, User,UserForm } from '../interfaces';
+import { me, login,signup, logout } from '../services';
 
 interface UserState {
     currentUser: User | null,
@@ -27,6 +27,13 @@ export const useUser = defineStore('user', {
         async login(loginForm: LoginForm) {
             try {
                 this.currentUser = await login(loginForm);
+            } catch (e) {
+                throw e;
+            }
+        },
+        async signup( userForm:  UserForm) {
+            try {
+                this.currentUser = await signup(userForm);
             } catch (e) {
                 throw e;
             }

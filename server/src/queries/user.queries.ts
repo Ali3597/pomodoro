@@ -11,7 +11,8 @@ export const findUserPerId = (id:string) => {
 
 export const createUser= async (user :UserForm) => {
   try {
-    const hashedPassword =  User.hashPassword(user.password);
+    console.log("on est la oui oui")
+    const hashedPassword =  await User.hashPassword(user.password);
     const newUser  = new User({
       name: user.name,
       local: {
