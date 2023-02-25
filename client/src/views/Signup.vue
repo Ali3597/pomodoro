@@ -2,11 +2,10 @@
 import { z } from 'zod';
 import { toFormValidator } from '@vee-validate/zod';
 import { useField, useForm } from 'vee-validate';
-import type { UserForm } from '@/shared/interfaces';
-import { signup } from '@/shared/services/auth.service';
+import type { UserForm ,ErrorApiInterface } from '@/shared/interfaces';
 import { useRouter } from 'vue-router';
 import { useUser } from '@/shared/stores/userStore';
-
+import { errorFor } from '@/shared/services';
 
 const router = useRouter();
 const userStore = useUser();
@@ -26,13 +25,25 @@ const submit = handleSubmit(async (formValue: UserForm) => {
         await userStore.signup(formValue);
         router.push('/profil');
     } catch (e) {
-        console.log(e);
+        if (<ErrorApiInterface[]>e ){
+            setErrors(
+            {"password":errorFor("password",<ErrorApiInterface[]>e ),
+            "name":errorFor("name",<ErrorApiInterface[]>e ),
+            "email":errorFor("email",<ErrorApiInterface[]>e ) }
+            )
+        }
     }
 });
 
-const { value: nameValue, errorMessage: nameError } = useField('name');
-const { value: emailValue, errorMessage: emailError } = useField('email');
-const { value: passwordValue, errorMessage: passwordError } = useField('password');
+const { value: nameValue, errorMessage: nameError,handleChange: handleName } = useField('name',null,  {
+  validateOnValueUpdate: false,
+});
+const { value: emailValue, errorMessage: emailError,handleChange: handleEmail} = useField('email',null,  {
+  validateOnValueUpdate: false,
+});
+const { value: passwordValue, errorMessage: passwordError,handleChange: handlePassword } = useField('password',null,  {
+  validateOnValueUpdate: false,
+});
 </script>
 
 <template>
@@ -41,17 +52,17 @@ const { value: passwordValue, errorMessage: passwordError } = useField('password
             <h2 class="mb-20">Inscription</h2>
             <div class="d-flex flex-column mb-10">
                 <label for="name" class="mb-5">Nom*</label>
-                <input v-model="nameValue" id="name" type="text">
+                <input @blur="handleName" v-model="nameValue" id="name" type="text">
                 <p v-if="nameError" class="form-error">{{ nameError }}</p>
             </div>
             <div class="d-flex flex-column mb-10">
                 <label for="email" class="mb-5">Email*</label>
-                <input v-model="emailValue" id="email" type="text">
+                <input @blur="handleEmail" v-model="emailValue" id="email" type="text">
                 <p v-if="emailError" class="form-error">{{ emailError }} </p>
             </div>
             <div class="d-flex flex-column mb-10">
                 <label for="password" class="mb-5">Mot de passe</label>
-                <input v-model="passwordValue" id="password" type="password">
+                <input @blur="handlePassword" v-model="passwordValue" id="password" type="password">
                 <p v-if="passwordError" class="form-error">{{ passwordError }}</p>
             </div>
             <div>

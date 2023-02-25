@@ -16,10 +16,10 @@ export const login = async (req:Request, res:Response, _:NextFunction) => {
         req.login(user);
         res.json(user);
       } else {
-        res.status(404).json( "Mauvais identifiants" );
+        res.status(404).json( [{ field: "password", message: "Mauvais identifiants" }] );
       }
     } else {
-    res.status(404).json( "Mauvais identifiants" );
+    res.status(404).json(  [{ field: "password", message: "Mauvais identifiants" }]  );
     }
   } catch (e) {
     res.status(404).json( "error" );
@@ -57,14 +57,14 @@ export const signup = async (req:Request, res:Response, _:NextFunction) => {
     req.login(user);
     res.json(user)
     } catch (e) {
-    const errorsMessage = [];
+    const errors = [];
     if (e instanceof ValidationError) {
       e.details.map((error) => {
-        errorsMessage.push({ field: error.path[0], message: error.message });
+        errors.push({ field: error.path[0], message: error.message });
       });
     } else {
-        errorsMessage.push({ field: "error", message: e })
+        errors.push({ field: "error", message: e })
     }
-    res.status(400).send({ errors: errorsMessage });
+    res.status(400).send(errors);
   }
 };

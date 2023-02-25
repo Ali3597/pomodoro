@@ -2,12 +2,13 @@
 import { z } from 'zod';
 import { toFormValidator } from '@vee-validate/zod';
 import { useField, useForm } from 'vee-validate';
-import type { LoginForm } from '@/shared/interfaces';
+import type { LoginForm,ErrorApiInterface } from '@/shared/interfaces';
 import { useRouter } from 'vue-router';
 import { useUser } from '@/shared/stores/userStore';
-
+import { errorFor } from '@/shared/services';
 const router = useRouter();
 const userStore = useUser();
+
 
 const validationSchema = toFormValidator(z.object({
     email: z.string({ required_error: 'Vous devez renseigner ce champ' }).email('Format email incorrect'),
@@ -23,12 +24,19 @@ const submit = handleSubmit(async (formValue: LoginForm) => {
         await userStore.login(formValue);
         router.push('/profil');
     } catch (e) {
-        setErrors({ password: e as string })
+        if (<ErrorApiInterface[]>e ){
+            setErrors({ "password": errorFor("password",<ErrorApiInterface[]>e ) })
+        }
+    
     }
 });
 
-const { value: emailValue, errorMessage: emailError } = useField('email');
-const { value: passwordValue, errorMessage: passwordError } = useField('password');
+const { value: emailValue, errorMessage: emailError ,handleChange: handleEmail } = useField('email',null,  {
+  validateOnValueUpdate: false,
+});
+const { value: passwordValue, errorMessage: passwordError,handleChange: handlePassword } = useField('password',null,  {
+  validateOnValueUpdate: false,
+});
 </script>
 
 <template>
@@ -37,12 +45,12 @@ const { value: passwordValue, errorMessage: passwordError } = useField('password
             <h2 class="mb-20">Connexion</h2>
             <div class="d-flex flex-column mb-10">
                 <label for="email" class="mb-5">Email*</label>
-                <input v-model="emailValue" id="email" type="text">
+                <input @blur="handleEmail" v-model="emailValue" id="email" type="text">
                 <p v-if="emailError" class="form-error">{{ emailError }} </p>
             </div>
             <div class="d-flex flex-column mb-10">
                 <label for="password" class="mb-5">Mot de passe</label>
-                <input v-model="passwordValue" id="password" type="password">
+                <input @blur="handlePassword" v-model="passwordValue" id="password" type="password">
                 <p v-if="passwordError" class="form-error">{{ passwordError }}</p>
             </div>
             <div>
