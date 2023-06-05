@@ -4,8 +4,9 @@
 /server/package-lock.json
 /server/env
 /server/node_modules
-/server/build                                                      
-
+/server/build    
+/server/.env                                                  
+/server/coverage
 # client side
 # Logs
 /client/logs

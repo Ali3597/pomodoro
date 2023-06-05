@@ -41,8 +41,7 @@ const userSignupValidation = Joi.object({
     .required()
     .messages({
       "string.base": "Veuillez renseignez un mot de passe",
-      "string.pattern.base":
-        "Le mot de passe doit être au minimum de 6 caractères",
+      "string.min":  "Le mot de passe doit être au minimum de 6 caractères",
     }),
 });
 
