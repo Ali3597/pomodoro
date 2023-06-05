@@ -24,7 +24,7 @@ export const createNewTask = async (userId:Types.ObjectId,title:String,details:S
     return await newTask.save();
   };
 
-  export const getOneTask= async (taskId: Types.ObjectId) => {
+  export const getOneTaskById= async (taskId: Types.ObjectId) => {
 
     return await Task.findOne({ _id: taskId })
     .populate({ path: "user", model: User })

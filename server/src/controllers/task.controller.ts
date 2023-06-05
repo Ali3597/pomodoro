@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { findLimitedTasksNotDoneByUserId, createNewTask, toggleOneTask, getOneTask,updateTaskWithTaskId,deleteTaskWithTaskId } from "../queries/task.queries";
+import { findLimitedTasksNotDoneByUserId, createNewTask, toggleOneTask, getOneTaskById,updateTaskWithTaskId,deleteTaskWithTaskId } from "../queries/task.queries";
 import { taskInfoValidation } from "../database/validation/task.validation";
 import { ValidationError } from "joi";
 import mongoose from 'mongoose';
@@ -42,7 +42,7 @@ export const toggleTask = async (req: Request, res: Response) => {
 
     try {
         const taskId = req.params.taskId;
-        const task = await getOneTask(new mongoose.Types.ObjectId(taskId.trim()))
+        const task = await getOneTaskById(new mongoose.Types.ObjectId(taskId.trim()))
         if (task) {
             const task_updated = await toggleOneTask(new mongoose.Types.ObjectId(taskId.trim()), task.done_at ? null : new Date())
             res.status(200).json(task_updated);
