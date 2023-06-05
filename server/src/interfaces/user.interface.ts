@@ -1,19 +1,16 @@
 
 
 import { Document ,Model } from "mongoose";
+import { ITask } from ".";
 
-
-export interface IUserLocal{
-    email:string;
-    password:string
-}
 
 
 export interface  IUser extends Document {
 
-    name: string,
-    local: IUserLocal
-
+    name: string
+    email:string
+    password:string
+    tasks: ITask[]
     comparePassword(password:string):boolean
     
 }

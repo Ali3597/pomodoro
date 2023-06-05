@@ -1,13 +1,13 @@
 import  mongoose from 'mongoose';
 import  bcrypt from "bcrypt";
 import { UserModel,IUser } from '../../interfaces';
+const schema = mongoose.Schema;
 
 const userSchema = new mongoose.Schema<IUser,UserModel>({
     name: { type: String, required: true, unique: true },
-    local: {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-  },
+    tasks : [{ type: schema.Types.ObjectId, ref: "task" }],
 });
 
 userSchema.statics.hashPassword = async (password:string) => {
@@ -20,7 +20,7 @@ userSchema.statics.hashPassword = async (password:string) => {
 };
 
 userSchema.methods.comparePassword = function (password:string) {
-  return bcrypt.compareSync(password, this.local.password);
+  return bcrypt.compareSync(password, this.password);
 };
 
 export const User = mongoose.model<IUser, UserModel>('User', userSchema);
