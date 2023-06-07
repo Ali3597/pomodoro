@@ -10,11 +10,33 @@ export const getMyTasks = async (req: Request, res: Response) => {
         let { order } = req.body;
         order = order == "ASC" ? 1 : -1
         const tasks = await findLimitedTasksNotDoneByUserId(req.user._id, order)
+
         res.status(200).json(tasks);
     } catch (e) {
         res.status(404).send({ message: e });
     }
 }
+
+export const getOneTask = async (req: Request, res: Response) => {
+
+    try {
+        const taskId = req.params.taskId;
+        const task = await getOneTaskById(new mongoose.Types.ObjectId(taskId.trim()))
+        if (task) {
+            res.status(200).json(task);
+        } else {
+            res.status(404).send({ message: "Aucune tâche trouvé" });
+        }
+
+    } catch (e) {
+
+        res.status(404).send({ message: "Erreur" });
+    }
+
+}
+
+
+
 
 export const createTask = async (req: Request, res: Response) => {
 
@@ -82,7 +104,7 @@ export const updateTask =async(req: Request, res: Response) => {
 export const deleteTask = async(req: Request, res: Response) => {
 
     try {
-        const taskId = req.params.taéskId;
+        const taskId = req.params.taskId;
         
         
 
@@ -91,6 +113,7 @@ export const deleteTask = async(req: Request, res: Response) => {
         
     
       } catch (e) {
+       
         res.status(404).send("error");
     
       }

@@ -4,7 +4,7 @@ const schema = mongoose.Schema;
 const taskSchema = new mongoose.Schema({
     title: { type: String, required: true },
     details : {type : String},
-    created_at: {type: Date,require: true,default: new Date()},
+    created_at: {type: Date,require: true,default: Date.now},
     updated_at: {type: Date,require: false},
     done_at:{type: Date , required:false, default: null},
     author: { type: schema.Types.ObjectId, ref: "user", required: true },

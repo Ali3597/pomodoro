@@ -29,7 +29,6 @@ export const login = async (req:Request, res:Response, _:NextFunction) => {
 export const me = async (req:Request, res:Response) => {
   try {
     if (req.user) {
-      console.log("allallalalalalao",req.user)
       res.json(req.user.set("password",null));
     } else {
       res.json(null);

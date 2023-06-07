@@ -4,10 +4,11 @@ import { User } from "../database/models/user.model";
 import { TaskForm } from "../interfaces";
 
 export const findLimitedTasksNotDoneByUserId = async (userId: Types.ObjectId, order: 1 | -1 = -1) => {
+ 
     return await Task.find({
         author: userId,
     })
-        .populate({ path: "user", model: User })
+        .populate({ path: "author", model: User,select: { '_id': 1,'name':1,'email':1}, })
         .sort({ created_at: order })
         .exec()
 };
@@ -27,7 +28,7 @@ export const createNewTask = async (userId:Types.ObjectId,title:String,details:S
   export const getOneTaskById= async (taskId: Types.ObjectId) => {
 
     return await Task.findOne({ _id: taskId })
-    .populate({ path: "user", model: User })
+    .populate({ path: "author", model: User, select: { '_id': 1,'name':1,'email':1}})
   
   };
 
@@ -51,7 +52,7 @@ export const createNewTask = async (userId:Types.ObjectId,title:String,details:S
       details : task.details
     },
       { new: true })
-    .populate({ path: "user", model: User })
+    .populate({ path: "author", model: User,select: { '_id': 1,'name':1,'email':1} })
 
   };
 
