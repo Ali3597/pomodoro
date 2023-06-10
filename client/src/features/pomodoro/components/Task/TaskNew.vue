@@ -29,8 +29,8 @@ function editTask(id:string,task:TaskFormInterface) {
     taskStore.editTask(id,task)
 }
 
-function whoIsOpen(id:string|null) {
-    taskStore.whoIsOpen(id)
+function setNewOpen(id:string|null) {
+    taskStore.setNewOpen(id)
 }
 
 
@@ -65,7 +65,7 @@ const trySubmit = handleSubmit((formValues,{ resetForm }) => {
         editTask(state.task._id,formValues as TaskFormInterface)
     }
     resetForm()
-    whoIsOpen(null)
+    setNewOpen(null)
 });
 </script>
 
@@ -86,7 +86,7 @@ const trySubmit = handleSubmit((formValues,{ resetForm }) => {
                 }}</small>
             </div>
             <div class="buttons d-flex">
-                <button @click="whoIsOpen(null)" id="cancel">Fermer</button> <button id="save" type="submit">Sauvegarder</button>
+                <button @click="setNewOpen(null)" id="cancel">Fermer</button> <button id="save" type="submit">Sauvegarder</button>
             </div>
         </form>
     </div>

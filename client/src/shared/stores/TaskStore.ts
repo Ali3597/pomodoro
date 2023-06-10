@@ -6,7 +6,7 @@ interface TaskState {
     tasks: TaskInterface[];
     filter: FilterTask;
     activeTaskId: string | null;
-    open: string | null;
+    openId: string | null;
     loaded: boolean
 }
 
@@ -20,7 +20,7 @@ export const useTask = defineStore('task', {
         tasks: [],
         filter: "Date",
         activeTaskId: null,
-        open: null,
+        openId: null,
         loaded: false
     }),
     getters: {
@@ -159,13 +159,9 @@ export const useTask = defineStore('task', {
         },
 
 
-        isItOpen(id: string) {
-            if (this.open == id) return true
-            return false
-        },
-
-        whoIsOpen(id: string | null) {
-            this.open = id
+     
+        setNewOpen(id: string | null) {
+            this.openId = id
         },
 
 

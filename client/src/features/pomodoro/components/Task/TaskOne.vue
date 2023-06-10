@@ -9,18 +9,16 @@ import TaskNew from './TaskNew.vue';
 defineProps<{
     task: TaskInterface;
     active: boolean
-    // open:boolean
+    open:boolean
 }>();
 
 const taskStore = useTask()
 
 
-function whoIsOpen(id:string|null) {
-    taskStore.whoIsOpen(id)
+function setNewOpen(id:string|null) {
+    taskStore.setNewOpen(id)
 }
-function isItOpen(id: string){
-    return taskStore.isItOpen(id)
-}
+
 
 const emit = defineEmits<{
     (e: 'activeTask', id: string): void;
@@ -33,7 +31,7 @@ const emit = defineEmits<{
 
 <template >
 
-    <div v-if="!isItOpen(task._id)"  @click="emit('activeTask', task._id)" class="task d-flex">
+    <div v-if="!open"  @click="emit('activeTask', task._id)" class="task d-flex">
         <div class="bordure" :class="active ? 'active' :'no'"></div>
         <p @click.stop="emit('toggleTask', task._id)" :style="{backgroundColor:task.done_at ? 'red':'#DFDFDF'}"
             class="check">
@@ -41,7 +39,7 @@ const emit = defineEmits<{
         </p>
         <p :style="{textDecoration:task.done_at ? 'line-through':'none'}">{{task.title}}</p>
         <p>0/1</p>
-        <div @click="whoIsOpen(task._id)" class="edit"><font-awesome-icon icon="fa-solid fa-pen" color="#868686" /></div>
+        <div @click="setNewOpen(task._id)" class="edit"><font-awesome-icon icon="fa-solid fa-pen" color="#868686" /></div>
     </div>
     <TaskNew :task="task"   v-else />
 

@@ -4,17 +4,15 @@ import { useTask } from '@/shared/stores/TaskStore';
 import TaskNew from './TaskNew.vue';
 const taskStore = useTask()
 
-function isItOpen(id: string){
-    return taskStore.isItOpen(id)
-}
-function whoIsOpen(id:string|null) {
-    taskStore.whoIsOpen(id)
+
+function setNewOpen(id:string|null) {
+    taskStore.setNewOpen(id)
 }
 
 </script>
 
 <template >
-    <div v-if="!isItOpen('new')" @click="whoIsOpen('new')" class="add-task d-flex">
+    <div v-if="!(taskStore.openId =='new')" @click="setNewOpen('new')" class="add-task d-flex">
         <font-awesome-icon icon="fa-solid fa-plus-circle" color="black" /> Rajoutez une tache
     </div>
     <TaskNew :task="null"   v-else />

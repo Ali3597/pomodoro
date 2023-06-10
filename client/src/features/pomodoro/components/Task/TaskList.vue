@@ -16,7 +16,7 @@ function toggleTask(id: string) {
 <template >
     <div class="tasks">
         <TaskOne @active-task="activeTask" @toggle-task="toggleTask" v-for="task in taskStore.tasks"
-            :key="task._id" :task="task" :active="task._id==taskStore.activeTaskId" />
+            :key="task._id" :task="task" :open="task._id==taskStore.openId" :active="task._id==taskStore.activeTaskId" />
     </div>
 </template>
 
