@@ -9,6 +9,7 @@ import TaskNew from './TaskNew.vue';
 defineProps<{
     task: TaskInterface;
     active: boolean
+    // open:boolean
 }>();
 
 const taskStore = useTask()

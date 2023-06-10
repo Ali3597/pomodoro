@@ -1,6 +1,5 @@
 
 <script setup lang="ts">
-import { reactive } from 'vue';
 import { useTask } from '@/shared/stores/TaskStore';
 import TaskNew from './TaskNew.vue';
 const taskStore = useTask()

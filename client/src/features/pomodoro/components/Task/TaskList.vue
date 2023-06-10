@@ -8,14 +8,14 @@ const taskStore = useTask()
 function activeTask(id: string) {
     taskStore.activeTask(id)
 }
-function toggleDoneTask(id: string) {
-    taskStore.toggleDoneTask(id)
+function toggleTask(id: string) {
+    taskStore.toggleTask(id)
 }
 </script>
 
 <template >
     <div class="tasks">
-        <TaskOne @active-task="activeTask" @toggle-task="toggleDoneTask" v-for="task in taskStore.tasksDay"
+        <TaskOne @active-task="activeTask" @toggle-task="toggleTask" v-for="task in taskStore.tasks"
             :key="task._id" :task="task" :active="task._id==taskStore.activeTaskId" />
     </div>
 </template>
