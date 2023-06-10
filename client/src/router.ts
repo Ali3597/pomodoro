@@ -9,6 +9,7 @@ export const router = createRouter({
     routes: [
         {
             path: '',
+            beforeEnter: [isAuthenticatedGuard],
             component: () => import('@/features/pomodoro/Pomodoro.vue')
         },
         {
