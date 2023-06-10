@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { findLimitedTasksNotDoneByUserId, createNewTask, toggleOneTask, getOneTaskById,updateTaskWithTaskId,deleteTaskWithTaskId } from "../queries/task.queries";
+import { findLimitedTasksByUserId, createNewTask, toggleOneTask, getOneTaskById,updateTaskWithTaskId,deleteTaskWithTaskId } from "../queries/task.queries";
 import { taskInfoValidation } from "../database/validation/task.validation";
 import { ValidationError } from "joi";
 import mongoose from 'mongoose';
@@ -9,7 +9,7 @@ export const getMyTasks = async (req: Request, res: Response) => {
     try {
         let { order } = req.body;
         order = order == "ASC" ? 1 : -1
-        const tasks = await findLimitedTasksNotDoneByUserId(req.user._id, order)
+        const tasks = await findLimitedTasksByUserId(req.user._id, order)
 
         res.status(200).json(tasks);
     } catch (e) {

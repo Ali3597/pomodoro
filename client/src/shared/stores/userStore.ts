@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import type { LoginForm, User,UserForm } from '../interfaces';
-import { me, login,signup, logout } from '../services';
+import type { LoginForm, User, UserForm } from '../interfaces';
+import {  apiFetch } from '../services';
 
 interface UserState {
     currentUser: User | null,
@@ -26,24 +26,35 @@ export const useUser = defineStore('user', {
     actions: {
         async login(loginForm: LoginForm) {
             try {
-                this.currentUser = await login(loginForm);
+                this.currentUser = await apiFetch("auth/login", {
+                    method: "POST",
+                    body: loginForm
+                })
             } catch (e) {
                 throw e;
             }
         },
-        async signup( userForm:  UserForm) {
+        async signup(userForm: UserForm) {
             try {
-                this.currentUser = await signup(userForm);
+                this.currentUser = await apiFetch("auth/signup", {
+                    method: "POST",
+                    body: userForm
+                })
             } catch (e) {
                 throw e;
             }
         },
         async logout() {
-            await logout();
-            this.currentUser = null;
+            try {
+                await apiFetch("auth/logout");
+                this.currentUser = null;
+            } catch (e) {
+                throw e;
+            }
         },
+
         async fetchCurrentUser() {
-            this.currentUser = await me();
+            this.currentUser = await apiFetch("auth/me");
             this.loaded = true;
         }
     }

@@ -1,55 +1,37 @@
-import type { TaskInterface,TaskFormInterface, FilterTask } from "@/shared/interfaces";
+import type { TaskInterface,TaskFormInterface, FilterTask, User } from "@/shared/interfaces";
 import { defineStore } from "pinia";
-
+import { useUser } from "./userStore";
+const userStore = useUser()
 interface TaskState {
     tasks: TaskInterface[];
-    day: Date;
     filter: FilterTask;
     activeTaskId: string | null;
     open:  string | null;
 }
 
-const taskTestA = {
-     _id: "1",
-    title: "Ma premiere tache test",
-    details: null ,
-    subTasks: [],
-    created_at: new Date(),
-    done_at: null 
-}
 
-const taskTestB = {
-     _id: "2",
-    title: "Ma deusieme tache test",
-    details: null ,
-    subTasks: [],
-    created_at: new Date(),
-    done_at: null 
-}
 
 
 
 export const useTask = defineStore('task', {
 
     state: (): TaskState => ({
-        tasks: [taskTestA,taskTestB],
-        day: new Date(),
+        tasks: [],
         filter: "Date",
         activeTaskId:"1",
         open:null
     }),
     getters: {
 
-        tasksDay(state) {
-            if (state.filter == "Date") {
-                return state.tasks.filter((task) => {
-                    return task.created_at.getDate() == state.day.getDate()
-                }).sort(compareTaskDate);
+        tasks(state) {
+            if (state.tasks){
+                return []
+            }
+            else if (state.filter == "Date") {
+                return state.tasks.sort(compareTaskDate);
             }
              else if (state.filter == "Done") {
-                return state.tasks.filter((task) => {
-                    return task.created_at.getDate() == state.day.getDate()
-                }).sort(compareTaskDone);
+                return state.tasks.sort(compareTaskDone);
             }
         },
 
@@ -65,15 +47,18 @@ export const useTask = defineStore('task', {
 
     actions: {
 
-
+        getMyTasks(){
+            this.tasks = await 
+        },
         addTask(task:TaskFormInterface) {
             const newTask:TaskInterface = {
                 _id: Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1),
                 title: task.title,
                 details : task.details,
-                subTasks : [],
                 created_at: new Date(),
-                done_at: null 
+                updated_at:null,
+                done_at: null ,
+                author: userStore.currentUser as User
             }
             this.tasks.push(newTask)
           },

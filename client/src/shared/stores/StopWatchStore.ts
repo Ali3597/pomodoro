@@ -15,7 +15,6 @@ export const useStopWatch = defineStore('stopWatch', {
         timeInterval: null
     }),
     getters: {
-
         prettyTime(state): string {
             let hour: any = Math.floor(state.time / 3600);
             let minute: any = Math.floor((state.time % 3600) / 60);
@@ -63,9 +62,9 @@ export const useStopWatch = defineStore('stopWatch', {
             this.status = "Progress"
             this.timeInterval = setInterval(() => {
                 if (this.time > 0) {
+                    console.log("alliii")
                     this.time--
                 } else {
-                    clearInterval(this.timeInterval)
                     this.reset()
                 }
             }, 1000)
@@ -80,7 +79,7 @@ export const useStopWatch = defineStore('stopWatch', {
             this.time = 1500
         },
         passToShortBreak() {
-            this.stop()
+            // this.stop()
             if (this.section !== "Short") {
                 this.section = "Short"
                 this.color = "#6cdf23"

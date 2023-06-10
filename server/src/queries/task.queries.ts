@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 import { User } from "../database/models/user.model";
 import { TaskForm } from "../interfaces";
 
-export const findLimitedTasksNotDoneByUserId = async (userId: Types.ObjectId, order: 1 | -1 = -1) => {
+export const findLimitedTasksByUserId = async (userId: Types.ObjectId, order: 1 | -1 = -1) => {
  
     return await Task.find({
         author: userId,
