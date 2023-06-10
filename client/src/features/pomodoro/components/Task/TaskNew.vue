@@ -3,7 +3,7 @@
 import type { TaskFormInterface, TaskInterface } from '@/shared/interfaces';
 import { useForm, useField } from 'vee-validate';
 import { z } from 'zod';
-import { toFormValidator } from '@vee-validate/zod';
+import { toTypedSchema } from '@vee-validate/zod';
 import { useTask } from '@/shared/stores/TaskStore';
 
 
@@ -12,8 +12,8 @@ const state = defineProps<{
 }>();
 
 let initialValues = {
-    title: state.task? state.task.title : "",
-    details: state.task ? state.task.details : "",
+    title: state.task? state.task.title : '',
+    details: state.task ? state.task.details : '',
 }
 
 const taskStore = useTask()
@@ -36,19 +36,20 @@ function setNewOpen(id:string|null) {
 
 const required = { required_error: 'Veuillez renseigner ce champ' };
 
-const validationSchema = toFormValidator(
+const validationSchema = toTypedSchema(
     z.object({
         title: z
             .string(required)
             .min(1, { message: 'Le titre doit faire au moins 1 caractère' })
             .max(50, { message: 'Le titre doit faire moins de 50 caractères' }),
-        details: z.string(required),
+        details: z.string(required)
+        .min(1, { message: 'Les details doit faire au moins 1 caractère' }),
     })
 );
 
 const { handleSubmit, isSubmitting } = useForm({
     validationSchema,
-    initialValues
+    initialValues 
 });
 const title = useField('title');
 const details = useField('details')
@@ -57,7 +58,6 @@ const details = useField('details')
 
 
 const trySubmit = handleSubmit((formValues,{ resetForm }) => {
-
 
     if (!state.task) {
         addTask(formValues as TaskFormInterface)
