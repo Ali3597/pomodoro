@@ -40,6 +40,7 @@ export async function apiFetch(endpoint:string, options :any= {}) {
       options.headers["Content-type"] = "application/json";
     }
     const response = await fetch(BASE_URL + endpoint, options);
+    console.log(response,"le bodyyy")
     const responseData = await response.json();
     if (response.ok) {
       return responseData;

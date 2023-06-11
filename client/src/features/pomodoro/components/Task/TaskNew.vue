@@ -41,7 +41,7 @@ const validationSchema = toTypedSchema(
         title: z
             .string(required)
             .min(1, { message: 'Le titre doit faire au moins 1 caractère' })
-            .max(50, { message: 'Le titre doit faire moins de 50 caractères' }),
+            .max(100, { message: 'Le titre doit faire moins de 100 caractères' }),
         details: z.string(required)
         .min(1, { message: 'Les details doit faire au moins 1 caractère' }),
     })
@@ -73,7 +73,7 @@ const trySubmit = handleSubmit((formValues,{ resetForm }) => {
     <div class="new-task d-flex">
         <form class="d-flex flex-column" @submit="trySubmit">
             <div class="input d-flex flex-column mb-20">
-                <input placeholder="Quelle est le titre de ta tâche ?" v-model="title.value.value" type="text" />
+                <textarea placeholder="Quelle est le titre de ta tâche ?" v-model="title.value.value as string" type="text" />
                 <small class="form-error" v-if="title.errorMessage.value">{{
                 title.errorMessage.value
                 }}</small>
@@ -100,7 +100,7 @@ form {
     height: fit-content;
 }
 
-.input >input {
+.input >textarea {
     width: 100%;
     border:0;
     outline:0;
@@ -110,14 +110,15 @@ form {
     font-size:24px ;
     font-weight: bold;
     margin: 0;
+    
   
 }
-.input >input::placeholder {
+.input >textarea::placeholder {
     font-size: 24px;
     opacity: .5;
     color: grey;
 }
-.input >input:focus {
+.input >textarea:focus {
     outline:none!important;
 }
 

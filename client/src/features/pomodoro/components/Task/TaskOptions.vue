@@ -16,6 +16,7 @@ function deleteAllTask() {
 }
 
 function validAllTask() {
+    console.log("okkokokokokokokokokokok")
     taskStore.validAllTask()
 }
 function deleteAllValidTask() {
@@ -34,11 +35,11 @@ window.addEventListener('click', closeOptions);
 
     <div class="d-flex options ">
         <p>Mes Taches</p>
-        <p @click.stop="state.open = !state.open">Icon</p>
+        <p @click.stop="state.open = !state.open"><font-awesome-icon class="icon" icon="fa-solid fa-bars" color="white" /></p>
         <div :class="state.open ? 'active' :'' " class="options-open d-flex flex-column">
-            <p @click.stop="closeOptions() , deleteAllTask()"><font-awesome-icon icon="fa-solid fa-trash" color="black" /> Surpprimer toutes les taches</p>
-            <p @click.stop="closeOptions() , validAllTask()"> <font-awesome-icon icon="fa-solid fa-check" color="black" /> Valider toutes les taches</p>
-            <p @click.stop="closeOptions() , deleteAllValidTask()"><font-awesome-icon icon="fa-solid fa-trash" color="black" /> Surpprimer toutes les taches terminés</p>
+            <p @click.stop="closeOptions() , deleteAllTask()"><font-awesome-icon class="icon-opt" icon="fa-solid fa-trash" color="red" /> Surpprimer toutes les taches</p>
+            <p @click.stop="closeOptions() , validAllTask()"> <font-awesome-icon class="icon-opt" icon="fa-solid fa-check" color="green" /> Valider toutes les taches</p>
+            <p @click.stop="closeOptions() , deleteAllValidTask()"><font-awesome-icon class="icon-opt" icon="fa-solid fa-trash" color="red" /> Surpprimer toutes les taches terminés</p>
         </div>
     </div>
 </template>
@@ -82,5 +83,12 @@ window.addEventListener('click', closeOptions);
 
 .options-open.active {
     display: flex;
+}
+.icon-opt{
+    margin-right: 2%;
+    margin-left: 2%;
+}
+.icon:hover{
+    scale: 1.2;
 }
 </style>

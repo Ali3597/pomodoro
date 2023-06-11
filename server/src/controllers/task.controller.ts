@@ -109,7 +109,7 @@ export const deleteTask = async(req: Request, res: Response) => {
         
 
           await deleteTaskWithTaskId(new mongoose.Types.ObjectId(taskId.trim()))
-          res.status(200).send()
+          res.status(200).send({})
         
     
       } catch (e) {

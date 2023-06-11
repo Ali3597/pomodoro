@@ -11,11 +11,14 @@ function activeTask(id: string) {
 function toggleTask(id: string) {
     taskStore.toggleTask(id)
 }
+function deleteTask(id: string) {
+    taskStore.deleteTask(id)
+}
 </script>
 
 <template >
     <div class="tasks">
-        <TaskOne @active-task="activeTask" @toggle-task="toggleTask" v-for="task in taskStore.tasks"
+        <TaskOne @active-task="activeTask" @delete-task="deleteTask" @toggle-task="toggleTask" v-for="task in taskStore.tasksSorted"
             :key="task._id" :task="task" :open="task._id==taskStore.openId" :active="task._id==taskStore.activeTaskId" />
     </div>
 </template>

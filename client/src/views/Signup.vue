@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { z } from 'zod';
-import { toFormValidator } from '@vee-validate/zod';
+import { toTypedSchema } from '@vee-validate/zod';
 import { useField, useForm } from 'vee-validate';
 import type { UserForm ,ErrorApiInterface } from '@/shared/interfaces';
 import { useRouter } from 'vue-router';
 import { useUser } from '@/shared/stores/userStore';
-import { errorFor } from '@/shared/services';
 
 const router = useRouter();
 const userStore = useUser();
 
-const validationSchema = toFormValidator(z.object({
+const validationSchema = toTypedSchema(z.object({
     name: z.string({ required_error: 'Vous devez renseigner ce champ' }).min(2, 'Trop court'),
     email: z.string({ required_error: 'Vous devez renseigner ce champ' }).email('Format email incorrect'),
     password: z.string({ required_error: 'Vous devez renseigner ce champ' }).min(5, 'Le mot de passe doit faire au moins 5 caractères'),
@@ -26,22 +25,18 @@ const submit = handleSubmit(async (formValue: UserForm) => {
         router.push('/profil');
     } catch (e) {
         if (<ErrorApiInterface[]>e ){
-            setErrors(
-            {"password":errorFor("password",<ErrorApiInterface[]>e ),
-            "name":errorFor("name",<ErrorApiInterface[]>e ),
-            "email":errorFor("email",<ErrorApiInterface[]>e ) }
-            )
+            console.log(e)
         }
     }
 });
 
-const { value: nameValue, errorMessage: nameError,handleChange: handleName } = useField('name',null,  {
+const { value: nameValue, errorMessage: nameError,handleChange: handleName } = useField('name',  {
   validateOnValueUpdate: false,
 });
-const { value: emailValue, errorMessage: emailError,handleChange: handleEmail} = useField('email',null,  {
+const { value: emailValue, errorMessage: emailError,handleChange: handleEmail} = useField('email',  {
   validateOnValueUpdate: false,
 });
-const { value: passwordValue, errorMessage: passwordError,handleChange: handlePassword } = useField('password',null,  {
+const { value: passwordValue, errorMessage: passwordError,handleChange: handlePassword } = useField('password',  {
   validateOnValueUpdate: false,
 });
 </script>

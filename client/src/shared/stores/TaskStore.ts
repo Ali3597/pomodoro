@@ -25,7 +25,7 @@ export const useTask = defineStore('task', {
     }),
     getters: {
 
-        tasks(state) {
+        tasksSorted(state) {
             if (state.filter == "Date") {
                 return state.tasks.sort(compareTaskDate);
             }
@@ -48,6 +48,7 @@ export const useTask = defineStore('task', {
 
         async fetchTasks() {
             this.tasks = await apiFetch("task/")
+            console.log(this.tasks,"voila les tasks")
             this.loaded = true;
         },
 
@@ -72,7 +73,9 @@ export const useTask = defineStore('task', {
                     method: "POST",
                     body: task
                 })
-                myTask = newTask
+                myTask!.title = newTask.title
+                myTask!.details = newTask.details
+
             } catch (e) {
                 throw e;
             }
@@ -81,10 +84,13 @@ export const useTask = defineStore('task', {
 
         async deleteTask(id: string) {
             try {
-                const newTask = await apiFetch("task/" + id, {
+                 await apiFetch("task/" + id, {
                     method: "DELETE",
                 })
-                this.tasks.filter(task => task._id != id)
+                console.log(this.tasks,"avanattt")
+                this.tasks= this.tasks.filter(task => task._id != id)
+                
+                console.log(this.tasks,"apress")
             } catch (e) {
                 throw e;
             }
@@ -97,7 +103,7 @@ export const useTask = defineStore('task', {
                 const newTask = await apiFetch("task/toggle/" + myTask!._id, {
                     method: "POST",
                 })
-                myTask = newTask
+                myTask!.done_at = newTask.done_at
             } catch (e) {
                 throw e;
             }
@@ -133,7 +139,8 @@ export const useTask = defineStore('task', {
                 await this.tasks.reduce(async (a, task) => {
                     // Wait for the previous item to finish processing
                     await a;
-                    if (task.done_at = null) {
+
+                    if (task.done_at == null) {
                         this.toggleTask(task._id)
                     }
                 }, Promise.resolve());
