@@ -21,12 +21,12 @@ const taskStore = useTask()
 
 
 
-function addTask(task:TaskFormInterface) {
-    taskStore.addTask(task)
+async function addTask(task:TaskFormInterface) {
+    await taskStore.addTask(task)
 }
-
-function editTask(id:string,task:TaskFormInterface) {
-    taskStore.editTask(id,task)
+ 
+async function editTask(id:string,task:TaskFormInterface) {
+   await  taskStore.editTask(id,task)
 }
 
 function setNewOpen(id:string|null) {
@@ -56,16 +56,17 @@ const details = useField('details')
 
 
 
-
-const trySubmit = handleSubmit((formValues,{ resetForm }) => {
-
+ const trySubmit =handleSubmit(async (formValues,{ resetForm }) => {
+    taskStore.resetErrors()
     if (!state.task) {
-        addTask(formValues as TaskFormInterface)
+        await addTask(formValues as TaskFormInterface)
         } else {
-        editTask(state.task._id,formValues as TaskFormInterface)
+        await editTask(state.task._id,formValues as TaskFormInterface)
     }
-    resetForm()
-    setNewOpen(null)
+    if (Object.keys(taskStore.errors).length === 0 ){
+        resetForm()
+        setNewOpen(null)   
+    }
 });
 </script>
 
@@ -77,6 +78,9 @@ const trySubmit = handleSubmit((formValues,{ resetForm }) => {
                 <small class="form-error" v-if="title.errorMessage.value">{{
                 title.errorMessage.value
                 }}</small>
+                <small class="form-error" v-if="taskStore.errors.title">{{
+                taskStore.errors.title
+                }}</small>
             </div>
             <div class="text d-flex flex-column mb-20">
                 <textarea placeholder="Ajouter un detail ?" v-model="(details.value.value as string)"></textarea>
@@ -84,9 +88,12 @@ const trySubmit = handleSubmit((formValues,{ resetForm }) => {
                 <small class="form-error" v-if="details.errorMessage.value">{{
                 details.errorMessage.value
                 }}</small>
+                <small class="form-error" v-if="taskStore.errors.details">{{
+                taskStore.errors.details
+                }}</small>
             </div>
             <div class="buttons d-flex">
-                <button @click="setNewOpen(null)" id="cancel">Fermer</button> <button id="save" type="submit">Sauvegarder</button>
+                <button @click="setNewOpen(null)"   id="cancel">Fermer</button> <button id="save" type="submit">Sauvegarder</button>
             </div>
         </form>
     </div>

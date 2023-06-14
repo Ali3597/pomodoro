@@ -97,7 +97,7 @@ export const updateTask =async(req: Request, res: Response) => {
         }else {
           errors.push({ field: "error", message: e })
       }
-      console.log(e)
+    
         res.status(404).send({  errors });
       }
 }

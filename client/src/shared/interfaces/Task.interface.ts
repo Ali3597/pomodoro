@@ -14,3 +14,8 @@ export interface TaskFormInterface {
     title: string,
     details:  string,
 }
+
+export interface TaskErrorInterface {
+    title?: string,
+    details?:  string,
+}

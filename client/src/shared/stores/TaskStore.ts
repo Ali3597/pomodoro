@@ -1,6 +1,7 @@
-import type { TaskInterface, TaskFormInterface, FilterTask } from "@/shared/interfaces";
+import type { TaskInterface, TaskFormInterface, FilterTask, TaskErrorInterface  } from "@/shared/interfaces";
 import { defineStore } from "pinia";
-import { apiFetch } from "../services";
+import { ApiErrors, apiFetch } from "../services";
+
 
 interface TaskState {
     tasks: TaskInterface[];
@@ -8,6 +9,7 @@ interface TaskState {
     activeTaskId: string | null;
     openId: string | null;
     loaded: boolean
+    errors :TaskErrorInterface 
 }
 
 
@@ -21,7 +23,8 @@ export const useTask = defineStore('task', {
         filter: "Date",
         activeTaskId: null,
         openId: null,
-        loaded: false
+        loaded: false,
+        errors : {}
     }),
     getters: {
 
@@ -48,7 +51,6 @@ export const useTask = defineStore('task', {
 
         async fetchTasks() {
             this.tasks = await apiFetch("task/")
-            console.log(this.tasks,"voila les tasks")
             this.loaded = true;
         },
 
@@ -59,8 +61,12 @@ export const useTask = defineStore('task', {
                     body: task
                 })
                 this.tasks.push(newTask)
-            } catch (e) {
-                throw e;
+            } catch (e ) {
+                if (e instanceof ApiErrors) {
+                    this.errors= e.errorsPerField 
+                } else {
+                    throw e
+                }
             }
 
         },
@@ -77,20 +83,21 @@ export const useTask = defineStore('task', {
                 myTask!.details = newTask.details
 
             } catch (e) {
-                throw e;
+                if (e instanceof ApiErrors) {
+                    this.errors= e.errorsPerField 
+                } else {
+                    throw e
+                }
             }
         },
 
 
         async deleteTask(id: string) {
             try {
-                 await apiFetch("task/" + id, {
+                await apiFetch("task/" + id, {
                     method: "DELETE",
                 })
-                console.log(this.tasks,"avanattt")
-                this.tasks= this.tasks.filter(task => task._id != id)
-                
-                console.log(this.tasks,"apress")
+                this.tasks = this.tasks.filter(task => task._id != id)
             } catch (e) {
                 throw e;
             }
@@ -166,9 +173,14 @@ export const useTask = defineStore('task', {
         },
 
 
-     
+
         setNewOpen(id: string | null) {
+            this.resetErrors()
             this.openId = id
+        },
+
+        resetErrors() {
+            this.errors = {}
         },
 
 

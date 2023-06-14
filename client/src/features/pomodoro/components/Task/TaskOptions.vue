@@ -16,7 +16,6 @@ function deleteAllTask() {
 }
 
 function validAllTask() {
-    console.log("okkokokokokokokokokokok")
     taskStore.validAllTask()
 }
 function deleteAllValidTask() {

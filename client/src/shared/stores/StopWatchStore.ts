@@ -62,7 +62,6 @@ export const useStopWatch = defineStore('stopWatch', {
             this.status = "Progress"
             this.timeInterval = setInterval(() => {
                 if (this.time > 0) {
-                    console.log("alliii")
                     this.time--
                 } else {
                     this.reset()
