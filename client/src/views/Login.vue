@@ -5,8 +5,14 @@ import { useField, useForm } from 'vee-validate';
 import type { LoginForm,ErrorApiInterface } from '@/shared/interfaces';
 import { useRouter } from 'vue-router';
 import { useUser } from '@/shared/stores/userStore';
+import { watchEffect } from 'vue';
 const router = useRouter();
 const userStore = useUser();
+
+
+watchEffect( () => {
+    userStore.resetErrors()
+})
 
 
 const validationSchema = toTypedSchema(z.object({
@@ -19,15 +25,13 @@ const { handleSubmit, setErrors } = useForm<{ email: string, password: string }>
 });
 
 const submit = handleSubmit(async (formValue: LoginForm) => {
-    try {
-        await userStore.login(formValue);
+    userStore.resetErrors()
+    await userStore.login(formValue);
+    if (Object.keys(userStore.errors).length === 0 ){
         router.push('/profil');
-    } catch (e) {
-        if (<ErrorApiInterface[]>e ){
-            console.log(e)
-        }
-    
     }
+    
+   
 });
 
 const { value: emailValue, errorMessage: emailError ,handleChange: handleEmail } = useField('email',  {
@@ -46,11 +50,13 @@ const { value: passwordValue, errorMessage: passwordError,handleChange: handlePa
                 <label for="email" class="mb-5">Email*</label>
                 <input @blur="handleEmail" v-model="emailValue" id="email" type="text">
                 <p v-if="emailError" class="form-error">{{ emailError }} </p>
+                
             </div>
             <div class="d-flex flex-column mb-10">
                 <label for="password" class="mb-5">Mot de passe</label>
                 <input @blur="handlePassword" v-model="passwordValue" id="password" type="password">
                 <p v-if="passwordError" class="form-error">{{ passwordError }}</p>
+                <p v-if="userStore.errors.password" class="form-error">{{ userStore.errors.password }}</p>
             </div>
             <div>
                 <button class="btn btn-primary">Connexion</button>

@@ -41,7 +41,10 @@ export async function apiFetch(endpoint:string, options :any= {}) {
     }
     const response = await fetch(BASE_URL + endpoint, options);
     const responseData = await response.json();
+    
+
     if (response.ok) {
+
       return responseData;
     } else {
       if (responseData.errors) {

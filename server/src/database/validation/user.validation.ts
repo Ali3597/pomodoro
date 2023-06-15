@@ -30,7 +30,7 @@ const userSignupValidation = Joi.object({
 
     "string.email": "Veuillez renseignez un email valide",
   }),
-  name: Joi.string().min(1).required().messages({
+  name: Joi.string().min(666).required().messages({
     "string.base": "Le  nom n'est pas valide",
     "string.empty": "Vous n' avez pas de nom pour ce client",
     "sting.min": "Votre nom est trop court",

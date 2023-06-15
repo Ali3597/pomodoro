@@ -1,16 +1,19 @@
 import { defineStore } from 'pinia';
 import type { LoginForm, User, UserForm } from '../interfaces';
-import {  apiFetch } from '../services';
+import {  ApiErrors, apiFetch } from '../services';
 
 interface UserState {
     currentUser: User | null,
-    loaded: boolean
+    loaded: boolean,
+    errors :UserForm
+    
 }
 
 export const useUser = defineStore('user', {
     state: (): UserState => ({
         currentUser: null,
-        loaded: false
+        loaded: false,
+        errors : {}
     }),
     getters: {
         isAuthenticated(state): boolean | null {
@@ -31,7 +34,13 @@ export const useUser = defineStore('user', {
                     body: loginForm
                 })
             } catch (e) {
-                throw e;
+                if (e instanceof ApiErrors) {
+                    this.errors= e.errorsPerField 
+           
+                } else {
+                  
+                    throw e
+                }
             }
         },
         async signup(userForm: UserForm) {
@@ -41,12 +50,17 @@ export const useUser = defineStore('user', {
                     body: userForm
                 })
             } catch (e) {
-                throw e;
+                if (e instanceof ApiErrors) {
+                    
+                    this.errors= e.errorsPerField 
+                } else {
+                    throw e
+                }
             }
         },
         async logout() {
             try {
-                await apiFetch("auth/logout");
+               
                 this.currentUser = null;
             } catch (e) {
                 throw e;
@@ -56,6 +70,10 @@ export const useUser = defineStore('user', {
         async fetchCurrentUser() {
             this.currentUser = await apiFetch("auth/me");
             this.loaded = true;
-        }
+        },
+
+        resetErrors() {
+            this.errors = {}
+        },
     }
 });

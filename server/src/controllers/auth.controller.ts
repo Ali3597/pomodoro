@@ -5,9 +5,10 @@ import  { ValidationError } from "joi";
 
 
 export const login = async (req:Request, res:Response, _:NextFunction) => {
+  const errors= []
   try {
     const { email, password } = req.body;
-
+    
     const user = await findUserPerEmail(email);
 
     if (user) {
@@ -16,13 +17,16 @@ export const login = async (req:Request, res:Response, _:NextFunction) => {
         req.login(user);
         res.json(user.set("password",null));
       } else {
-        res.status(404).json( [{ field: "password", message: "Mauvais identifiants" }] );
+        errors.push({ field: "password", message: "Mauvais identifiants" })
+        res.status(404).send( { errors } );
       }
     } else {
-    res.status(404).json(  [{ field: "password", message: "Mauvais identifiants" }]  );
+      errors.push({ field: "password", message: "Mauvais identifiants" })
+      res.status(404).send( { errors } );
     }
   } catch (e) {
-    res.status(404).json( "error" );
+    errors.push({ field: "error", message: "Error" })
+    res.status(404).send( { errors } );
   }
 };
 
@@ -65,6 +69,6 @@ export const signup = async (req:Request, res:Response, _:NextFunction) => {
     } else {
         errors.push({ field: "error", message: e })
     }
-    res.status(404).send(errors);
+    res.status(404).send({ errors });
   }
 };
