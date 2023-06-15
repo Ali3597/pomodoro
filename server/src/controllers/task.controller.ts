@@ -85,8 +85,8 @@ export const updateTask =async(req: Request, res: Response) => {
 
         await taskInfoValidation.validateAsync(req.body, { abortEarly: false });
         const taskId = req.params.taskId;
-        const plant = await updateTaskWithTaskId(new  mongoose.Types.ObjectId(taskId.trim()),req.body);
-        res.status(200).json( plant );
+        const task = await updateTaskWithTaskId(new  mongoose.Types.ObjectId(taskId.trim()),req.body);
+        res.status(200).json( task );
     
       } catch (e) {
         const errors = [];

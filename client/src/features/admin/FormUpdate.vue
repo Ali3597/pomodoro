@@ -18,7 +18,6 @@ watchEffect( () => {
 const validationSchema = toTypedSchema(z.object({
     name: z.string({ required_error: 'Vous devez renseigner ce champ' }).min(2, 'Trop court'),
     email: z.string({ required_error: 'Vous devez renseigner ce champ' }).email('Format email incorrect'),
-    password: z.string({ required_error: 'Vous devez renseigner ce champ' }).min(5, 'Le mot de passe doit faire au moins 5 caractères'),
 }));
 
 const { handleSubmit, setErrors } = useForm({
@@ -28,9 +27,7 @@ const { handleSubmit, setErrors } = useForm({
 const submit = handleSubmit(async (formValue: UserForm) => {
     userStore.resetErrors()
     await userStore.signup(formValue);
-    if (Object.keys(userStore.errors).length === 0 ){
-        router.push('/profil');
-    }
+ 
 });
 
 const { value: nameValue, errorMessage: nameError,handleChange: handleName } = useField('name',  {
@@ -39,9 +36,7 @@ const { value: nameValue, errorMessage: nameError,handleChange: handleName } = u
 const { value: emailValue, errorMessage: emailError,handleChange: handleEmail} = useField('email',  {
   validateOnValueUpdate: false,
 });
-const { value: passwordValue, errorMessage: passwordError,handleChange: handlePassword } = useField('password',  {
-  validateOnValueUpdate: false,
-});
+
 </script>
 
 <template>

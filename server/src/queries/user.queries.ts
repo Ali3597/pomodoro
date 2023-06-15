@@ -1,5 +1,7 @@
+
 import {User} from "../database/models/user.model";
-import {UserForm } from "../interfaces";
+import {UserForm,UserInfo } from "../interfaces";
+import { Types } from 'mongoose';
 
 export const findUserPerEmail = (email:string) => {
   return User.findOne({ "email": email }).exec();
@@ -22,3 +24,25 @@ export const createUser= async (user :UserForm) => {
     throw e;
   }
 };
+
+
+export const updateUserWithUserId = async (userId: Types.ObjectId, userInfo: UserInfo) => {
+  return await User.findByIdAndUpdate(userId, {
+    email:userInfo.email,
+    name:userInfo.name
+  },
+    { new: true })
+ 
+
+};
+
+export const updateUserPasswordWithUserId = async (userId: Types.ObjectId, userPassword: string) => {
+  const hashedPassword =  await User.hashPassword(userPassword);
+  return await User.findByIdAndUpdate(userId, {
+    password:hashedPassword
+  },
+    { new: true })
+ 
+
+};
+

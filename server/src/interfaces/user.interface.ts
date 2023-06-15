@@ -21,6 +21,13 @@ export interface UserForm {
     password:string
 }
 
+export interface UserInfo{
+    name: string,
+    email:string,
+
+}
+
+
 
 export interface UserjwtToken {
     user:IUser|null,

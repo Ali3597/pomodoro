@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import { useUser } from '@/shared/stores/userStore';
-import FormPassword from './FormPassword.vue';
-import FormUpdate from './FormUpdate.vue';
 const userStore = useUser()
 </script>
 
 <template>
     <div class="d-flex flex-column align-items-center justify-content-center">
-        <FormUpdate />>
-        <FormPassword />
-
+        <div class="card d-flex flex-column">
+            <pre>{{ userStore.currentUser }}</pre>
+        </div>
+        <div class="card">
+            <pre>{{ userStore.currentUser }}</pre>
+        </div>
     </div>
 </template>
 
 
 <style scoped lang="css" >
-
+.card {
+    width: 100%;
+    max-width: 300px;
+}
 </style>
