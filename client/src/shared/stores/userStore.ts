@@ -58,6 +58,38 @@ export const useUser = defineStore('user', {
                 }
             }
         },
+        async updateInfo(userForm: UserForm) {
+            try {
+                this.currentUser = await apiFetch("user", {
+                    method: "POST",
+                    body: userForm
+                })
+            } catch (e) {
+                if (e instanceof ApiErrors) {
+                    
+                    this.errors= e.errorsPerField 
+                } else {
+                    throw e
+                }
+            }
+        },
+        async updatePassword(passwordForm:any) {
+            try {
+                this.currentUser = await apiFetch("user/password", {
+                    method: "POST",
+                    body:passwordForm
+                })
+            } catch (e) {
+                if (e instanceof ApiErrors) {
+                    
+                    this.errors= e.errorsPerField 
+                } else {
+                    throw e
+                }
+            }
+        },
+
+
         async logout() {
             try {
                

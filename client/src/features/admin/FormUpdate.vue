@@ -3,17 +3,18 @@ import { z } from 'zod';
 import { toTypedSchema } from '@vee-validate/zod';
 import { useField, useForm } from 'vee-validate';
 import type { UserForm } from '@/shared/interfaces';
-import { useRouter } from 'vue-router';
 import { useUser } from '@/shared/stores/userStore';
-import { watchEffect } from 'vue';
+import { ref } from 'vue'
+
+const success = ref("")
 
 
-const router = useRouter();
 const userStore = useUser();
 
-watchEffect( () => {
-    userStore.resetErrors()
-})
+let initialValues = {
+    name: userStore.currentUser?.name,
+    email: userStore.currentUser?.email,
+}
 
 const validationSchema = toTypedSchema(z.object({
     name: z.string({ required_error: 'Vous devez renseigner ce champ' }).min(2, 'Trop court'),
@@ -21,12 +22,16 @@ const validationSchema = toTypedSchema(z.object({
 }));
 
 const { handleSubmit, setErrors } = useForm({
-    validationSchema
+    validationSchema,
+    initialValues
 });
 
 const submit = handleSubmit(async (formValue: UserForm) => {
     userStore.resetErrors()
-    await userStore.signup(formValue);
+    await userStore.updateInfo(formValue);
+    if (Object.keys(userStore.errors).length === 0 ){
+       success.value = "Informations modifié"
+    }
  
 });
 
@@ -42,27 +47,24 @@ const { value: emailValue, errorMessage: emailError,handleChange: handleEmail} =
 <template>
     <div class="container d-flex flex-row p-20 justify-content-center align-items-start">
         <form @submit="submit" class="card">
-            <h2 class="mb-20">Inscription</h2>
+            <h2 class="mb-20">Changer ses infos  </h2>
             <div class="d-flex flex-column mb-10">
                 <label for="name" class="mb-5">Nom*</label>
                 <input @blur="handleName" v-model="nameValue" id="name" type="text">
                 <p v-if="nameError" class="form-error">{{ nameError }}</p>
                 <p v-if="userStore.errors.name" class="form-error">{{ userStore.errors.name }} </p>
+                
+
             </div>
             <div class="d-flex flex-column mb-10">
                 <label for="email" class="mb-5">Email*</label>
                 <input @blur="handleEmail" v-model="emailValue" id="email" type="text">
                 <p v-if="emailError" class="form-error">{{ emailError }} </p>
                 <p v-if="userStore.errors.email" class="form-error">{{ userStore.errors.email }} </p>
-            </div>
-            <div class="d-flex flex-column mb-10">
-                <label for="password" class="mb-5">Mot de passe</label>
-                <input @blur="handlePassword" v-model="passwordValue" id="password" type="password">
-                <p v-if="passwordError" class="form-error">{{ passwordError }}</p>
-                <p v-if="userStore.errors.password" class="form-error">{{ userStore.errors.password }}</p>
+                <p  class="form-success">{{ success }} </p>
             </div>
             <div>
-                <button class="btn btn-primary">Inscription</button>
+                <button class="btn btn-primary">Modifier</button>
             </div>
         </form>
     </div>

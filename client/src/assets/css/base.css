@@ -187,6 +187,11 @@ body {
     font-size: 14px;
     font-weight: 500;
 }
+.form-success {
+    color: green;
+    font-size: 14px;
+    font-weight: 500;
+}
 
 input,
 textarea,
