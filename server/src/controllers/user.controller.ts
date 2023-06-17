@@ -14,6 +14,7 @@ export const updateUser =async(req: Request, res: Response) => {
         res.status(200).json( user?.set("password",null)) ;
     
       } catch (e) {
+      
         const errors = [];
         if (e instanceof ValidationError) {
           e.details.map((error) => {
@@ -33,12 +34,15 @@ export const updateUser =async(req: Request, res: Response) => {
 export const updatePassword =async(req: Request, res: Response) => {
 
     try {
-
+      
         await userPasswordValidation.validateAsync(req.body, { abortEarly: false });
+        
         const user = await updateUserPasswordWithUserId (req.user._id,req.body.password);
+  
         res.status(200).json( user?.set("password",null)) ;
     
       } catch (e) {
+        
         const errors = [];
         if (e instanceof ValidationError) {
           e.details.map((error) => {

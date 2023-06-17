@@ -61,6 +61,7 @@ export const signup = async (req:Request, res:Response, _:NextFunction) => {
     req.login(user);
     res.json(user.set("password",null))
     } catch (e) {
+     
     const errors = [];
     if (e instanceof ValidationError) {
       e.details.map((error) => {

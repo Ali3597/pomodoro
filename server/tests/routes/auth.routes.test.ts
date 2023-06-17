@@ -47,10 +47,7 @@ describe("Signup", () => {
       .set('Content-type', 'application/json')
       .send(payload)
     expect(resp.statusCode).toBe(404)
-    expect(resp.body).toMatchObject([{
-      "field": "password",
-      "message": "Le mot de passe doit être au minimum de 6 caractères"
-    }])
+    expect(resp.body).toMatchObject({"errors": [{"field": "password", "message": "Le mot de passe doit être au minimum de 6 caractères"}]})
   });
 
   test("Signup whith doublon for the email", async () => {
@@ -83,10 +80,7 @@ describe("Login", () => {
     const resp = await request(app).post("/api/auth/login")
       .send({ "email": "jwttoken@hotmail.com", "password": "1234s56" })
     expect(resp.statusCode).toBe(404)
-    expect(resp.body).toMatchObject([{
-      "field": "password",
-      "message": "Mauvais identifiants"
-    }])
+    expect(resp.body).toMatchObject({"errors": [{"field": "password", "message": "Mauvais identifiants"}]})
   });
 
 });
