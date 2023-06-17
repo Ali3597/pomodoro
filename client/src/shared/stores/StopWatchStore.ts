@@ -12,7 +12,8 @@ export const useStopWatch = defineStore('stopWatch', {
         color: "#ff0025",
         status: "Pause",
         section: "Work",
-        timeInterval: null
+        timeInterval: null,
+        countWork :0,
     }),
     getters: {
         prettyTime(state): string {
@@ -74,11 +75,22 @@ export const useStopWatch = defineStore('stopWatch', {
             clearInterval(this.timeInterval)
         },
         reset() {
-            this.stop()
-            this.time = 1500
+            if (this.section=="Work"){
+                this.countWork = this.countWork +1
+                if (this.countWork==3){
+                    this.countWork = 0
+                    this.passToLongBreak()
+                }else{
+                    this.passToShortBreak()
+                }
+                
+            }else{
+                this.passToWork()
+            }
+           
         },
         passToShortBreak() {
-            // this.stop()
+            this.stop()
             if (this.section !== "Short") {
                 this.section = "Short"
                 this.color = "#6cdf23"

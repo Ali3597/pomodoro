@@ -7,5 +7,6 @@ export interface StopWatchInterface {
     status: Status,
     section: Section,
     timeInterval: any
+    countWork:number
 
 }
