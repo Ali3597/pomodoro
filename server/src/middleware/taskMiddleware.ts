@@ -10,13 +10,13 @@ export const areyouTheTaskOwner = async (req: Request, res: Response, next: Next
             if (req.user._id.equals(task.author._id)) {
                 next()
             } else {
-                res.status(405).send([{ field: "error", message: "Your are not allowed" }]);
+                res.status(405).send({"errors":[{ field: "error", message: "Your are not allowed" }]});
             }
         } else {
-            res.status(404).send([{ field: "error", message: "Error" }]);
+            res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
         }
 
     } catch (e) {
-        res.status(404).send([{ field: "error", message: "Error" }]);
+        res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
     }
 };

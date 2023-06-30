@@ -13,7 +13,7 @@ export const getMyTasks = async (req: Request, res: Response) => {
 
         res.status(200).send(tasks);
     } catch (e) {
-        res.status(404).send([{ field: "error", message: "Error" }]);
+        res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
     }
 }
 
@@ -26,12 +26,12 @@ export const getOneTask = async (req: Request, res: Response) => {
             res.status(200).send(task);
         } else {
 
-            res.status(404).send([{ field: "error", message: "Aucune tâche trouvé" }]);
+            res.status(404).send({"errors":[{ field: "error", message: "Aucune tâche trouvé" }]});
         }
 
     } catch (e) {
 
-        res.status(404).send([{ field: "error", message: "Erreur" }]);
+        res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
     }
 
 }
@@ -70,12 +70,12 @@ export const toggleTask = async (req: Request, res: Response) => {
             const task_updated = await toggleOneTask(new mongoose.Types.ObjectId(taskId.trim()), task.done_at ? null : new Date())
             res.status(200).send(task_updated);
         } else {
-            res.status(404).send([{ field: "error", message: "Aucune tâche trouvé" }]);
+            res.status(404).send({"errors":[{ field: "error", message: "Aucune tâche trouvé" }]});
         }
 
     } catch (e) {
 
-        res.status(404).send([{ field: "error", message: "Error" }]);
+        res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
     }
 
 }
@@ -109,6 +109,6 @@ export const deleteTask = async (req: Request, res: Response) => {
         await deleteTaskWithTaskId(new mongoose.Types.ObjectId(taskId.trim()))
         res.status(200).send()
     } catch (e) {
-        res.status(404).send([{ field: "error", message: "Error" }]);
+        res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
     }
 }

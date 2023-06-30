@@ -16,13 +16,13 @@ export const login = async (req: Request, res: Response, _: NextFunction) => {
         req.login(user);
         res.status(200).send(user.set("password", null));
       } else {
-        res.status(404).send([{ field: "password", message: "Mauvais identifiants" }]);
+        res.status(404).send({"errors":[{ field: "password", message: "Mauvais identifiants" }]});
       }
     } else {
-      res.status(404).send([{ field: "password", message: "Mauvais identifiants" }]);
+      res.status(404).send({"errors":[{ field: "password", message: "Mauvais identifiants" }]});
     }
   } catch (e) {
-    res.status(404).send([{ field: "error", message: "Error" }]);
+    res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
   }
 };
 
@@ -34,7 +34,7 @@ export const me = async (req: Request, res: Response) => {
       res.status(200).send();
     }
   } catch (error) {
-    res.status(404).send([{ field: "error", message: "Error" }]);
+    res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
   }
 };
 
@@ -43,7 +43,7 @@ export const signout = async (req: Request, res: Response, _: NextFunction) => {
     req.logout();
     res.status(200).send();
   } catch (error) {
-    res.status(404).send([{ field: "error", message: "Error" }]);
+    res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
   }
 };
 

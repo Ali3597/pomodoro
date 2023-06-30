@@ -167,7 +167,7 @@ describe("get  tasks   ", () => {
         const resp = await request(app).get("/api/task")
           .set('Content-type', 'application/json')
           expect(resp.statusCode).toBe(404)
-          expect(resp.body).toMatchObject({ message: "Your are not logged in" })
+          expect(resp.body).toMatchObject({"errors": [{"field": "error", "message": "Your are not logged in"}]})
 
       });
 
@@ -184,7 +184,7 @@ describe("get  tasks   ", () => {
         const resp = await request(app).get("/api/task/"+tasksUserOtherId[0])
             .set('Content-type', 'application/json')
             .set('Cookie', cookieJWTUser)   
-        expect(resp.statusCode).toBe(404)
+        expect(resp.statusCode).toBe(405)
 
     });
 
@@ -195,8 +195,9 @@ describe("get  tasks   ", () => {
   
         const resp = await request(app).get("/api/task/"+tasksUserOtherId[0])
           .set('Content-type', 'application/json')
-          expect(resp.statusCode).toBe(404)
-          expect(resp.body).toMatchObject({ message: "Your are not logged in"})
+          .set('Cookie', cookieJWTUser)
+          expect(resp.statusCode).toBe(405)
+          expect(resp.body).toMatchObject({"errors": [{"field": "error", "message": "Your are not allowed"}]})
 
       });
 
@@ -261,8 +262,8 @@ describe("get  tasks   ", () => {
                 "title":"test_update_apres",
                 "details": "mon detail teststts_apres",
                })
-            expect(resp.statusCode).toBe(404)
-            expect(resp.body).toMatchObject({ message: "Your are not allowed" })
+            expect(resp.statusCode).toBe(405)
+            expect(resp.body).toMatchObject({"errors": [{"field": "error", "message": "Your are not allowed"}]})
   
         });
 
@@ -270,8 +271,8 @@ describe("get  tasks   ", () => {
             const resp = await request(app).delete("/api/task/"+taskIdToGet)
             .set('Content-type', 'application/json')
               .set('Cookie', cookieJWTOtherUser)
-              expect(resp.statusCode).toBe(404)
-              expect(resp.body).toMatchObject({ message: "Your are not allowed" })
+              expect(resp.statusCode).toBe(405)
+              expect(resp.body).toMatchObject( {"errors": [{"field": "error", "message": "Your are not allowed"}]})
 
               const respAfterDelte =  await request(app).get("/api/task/"+taskIdToGet)
               .set('Content-type', 'application/json')

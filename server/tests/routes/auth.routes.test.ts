@@ -38,7 +38,8 @@ describe("Signup", () => {
       .set('Cookie', cookieJWT)
       .send({ "name": "test25", "email": "email_test25@hotmail.com", "password": "123456" })
     expect(resp.statusCode).toBe(404)
-    expect(resp.body).toMatchObject({ message: "Your are  logged in" })
+    console.log(resp.body)
+    expect(resp.body).toMatchObject({"errors":[{ field: "error", message: "Your are  logged in" }]})
   });
 
   test("Signup with wrong  password ", async () => {
@@ -73,7 +74,7 @@ describe("Login", () => {
       .set('Cookie', cookieJWT)
       .send({ "email": "jwttoken@hotmail.com", "password": "123456" })
     expect(resp.statusCode).toBe(404)
-    expect(resp.body).toMatchObject({ message: "Your are  logged in" })
+    expect(resp.body).toMatchObject({"errors": [{"field": "error", "message": "Your are  logged in"}]})
   });
 
   test("login wrong password ", async () => {
@@ -99,7 +100,7 @@ describe("logout", () => {
     const resp = await request(app).get("/api/auth/logout")
       .send()
     expect(resp.statusCode).toBe(404)
-    expect(resp.body).toMatchObject({ message: "Your are not logged in" })
+    expect(resp.body).toMatchObject({"errors":[{ field: "error", message: "Your are not logged in" }]})
   });
 
 });
@@ -119,7 +120,7 @@ describe("me", () => {
     const resp = await request(app).get("/api/auth/me")
       .send()
     expect(resp.statusCode).toBe(200)
-    expect(resp.body).toEqual(null)
+    expect(resp.body).toEqual({})
   });
 
 
