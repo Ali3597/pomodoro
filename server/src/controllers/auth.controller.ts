@@ -1,74 +1,70 @@
-import  { findUserPerEmail, createUser } from "../queries/user.queries";
-import  {userSignupValidation} from "../database/validation/user.validation";
+import { findUserPerEmail, createUser } from "../queries/user.queries";
+import { userSignupValidation } from "../database/validation/user.validation";
 import { NextFunction, Request, Response } from "express";
-import  { ValidationError } from "joi";
+import { ValidationError } from "joi";
 
 
-export const login = async (req:Request, res:Response, _:NextFunction) => {
-  const errors= []
+export const login = async (req: Request, res: Response, _: NextFunction) => {
   try {
     const { email, password } = req.body;
-    
+
     const user = await findUserPerEmail(email);
 
     if (user) {
-      const match =  user.comparePassword(password);
+      const match = user.comparePassword(password);
       if (match) {
         req.login(user);
-        res.json(user.set("password",null));
+        res.status(200).send(user.set("password", null));
       } else {
-        errors.push({ field: "password", message: "Mauvais identifiants" })
-        res.status(404).send( { errors } );
+        res.status(404).send([{ field: "password", message: "Mauvais identifiants" }]);
       }
     } else {
-      errors.push({ field: "password", message: "Mauvais identifiants" })
-      res.status(404).send( { errors } );
+      res.status(404).send([{ field: "password", message: "Mauvais identifiants" }]);
     }
   } catch (e) {
-    errors.push({ field: "error", message: "Error" })
-    res.status(404).send( { errors } );
+    res.status(404).send([{ field: "error", message: "Error" }]);
   }
 };
 
-export const me = async (req:Request, res:Response) => {
+export const me = async (req: Request, res: Response) => {
   try {
     if (req.user) {
-      res.json(req.user.set("password",null));
+      res.send(req.user.set("password", null));
     } else {
-      res.json(null);
+      res.status(200).send();
     }
   } catch (error) {
-    res.status(404).json( "error" );
+    res.status(404).send([{ field: "error", message: "Error" }]);
   }
 };
 
-export const signout = async (req:Request, res:Response, _:NextFunction) => {
+export const signout = async (req: Request, res: Response, _: NextFunction) => {
   try {
     req.logout();
     res.status(200).send();
   } catch (error) {
-    res.status(404).json( "error" );
+    res.status(404).send([{ field: "error", message: "Error" }]);
   }
 };
 
 
-export const signup = async (req:Request, res:Response, _:NextFunction) => {
+export const signup = async (req: Request, res: Response, _: NextFunction) => {
 
-    try {
+  try {
     await userSignupValidation.validateAsync(req.body, { abortEarly: false });
     const body = req.body;
     const user = await createUser(body);
     req.login(user);
-    res.json(user.set("password",null))
-    } catch (e) {
-     
+    res.status(200).send(user.set("password", null))
+  } catch (e) {
+
     const errors = [];
     if (e instanceof ValidationError) {
       e.details.map((error) => {
         errors.push({ field: error.path[0], message: error.message });
       });
     } else {
-        errors.push({ field: "error", message: e })
+      errors.push({ field: "error", message: "Error" })
     }
     res.status(404).send({ errors });
   }

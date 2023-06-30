@@ -11,7 +11,7 @@ export const updateUser =async(req: Request, res: Response) => {
 
         await userInfoValidation.validateAsync(req.body, { abortEarly: false });
         const user = await updateUserWithUserId (req.user._id,req.body);
-        res.status(200).json( user?.set("password",null)) ;
+        res.status(200).send( user?.set("password",null)) ;
     
       } catch (e) {
       
@@ -21,7 +21,7 @@ export const updateUser =async(req: Request, res: Response) => {
             errors.push({ field: error.path[0], message: error.message });
           });
         }else {
-          errors.push({ field: "error", message: e })
+          errors.push({ field: "error", message:  "Error"})
       }
     
         res.status(404).send({  errors });
@@ -39,7 +39,7 @@ export const updatePassword =async(req: Request, res: Response) => {
         
         const user = await updateUserPasswordWithUserId (req.user._id,req.body.password);
   
-        res.status(200).json( user?.set("password",null)) ;
+        res.status(200).send( user?.set("password",null)) ;
     
       } catch (e) {
         
@@ -49,7 +49,7 @@ export const updatePassword =async(req: Request, res: Response) => {
             errors.push({ field: error.path[0], message: error.message });
           });
         }else {
-          errors.push({ field: "error", message: e })
+          errors.push({ field: "error", message:  "Error" })
       }
     
         res.status(404).send({  errors });
