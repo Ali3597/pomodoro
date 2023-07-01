@@ -1,0 +1,544 @@
+<div><link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet"><style>
+    .clear {
+  clear: both;
+}
+
+.rest {
+  font-family: 'Open Sans';
+  max-width: 1120px;
+  margin: 50px auto;
+}
+
+.rest * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.rest a {
+  color: #f7ad41;
+  text-decoration: none;
+}
+
+.rest__header {
+  margin-bottom: 30px;
+  color: #5b5b5b;
+}
+
+.rest__title {
+  margin-bottom: 20px;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.rest__title small {
+  font-size: 65%;
+  font-weight: 400;
+}
+
+.rest__base-uri {
+  padding-left: 25px;
+  font-size: 14px;
+}
+
+.rest__uri-parameters {
+  font-size: 14px;
+}
+
+.rest .examples {
+  margin-left: 0.5em;
+}
+
+.rest .items {
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+}
+
+.rest blockquote {
+  margin: 0 0 20px;
+  padding: 15px 20px 15px 15px;
+  border-left: 5px solid #F7AD41;
+  background: #FFF2DF;
+  position: relative;
+  font-size: 16px;
+  color: #5b5b5b;
+}
+
+.rest blockquote ol:first-child,
+.rest blockquote p:first-child,
+.rest blockquote ul:first-child {
+  margin-top: 0;
+}
+
+.rest blockquote ol:last-child,
+.rest blockquote p:last-child,
+.rest blockquote ul:last-child {
+  margin-bottom: 0;
+}
+
+.rest pre {
+  border: none;
+  border-radius: 0;
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #333;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #F0F0F0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+/* Navigation */
+
+.rest-nav {
+  font-size: 16px;
+  font-weight: 800;
+  color: #666;
+  border-bottom: 2px solid #f7ad41;
+  padding-left: 0;
+  list-style: none;
+}
+
+.rest-nav__item {
+  display: inline-block;
+}
+
+.rest-nav__item a {
+  display: block;
+  background: #f6f6f6;
+  color: #666;
+  padding: 10px 15px;
+  text-decoration: none;
+}
+
+.rest-nav__item a:hover {
+  background-color: #eee;
+}
+
+.rest-nav__item.active a {
+  color: #fff;
+  background-color: #f7ad41;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Objects */
+
+.objects {
+  color: #5b5b5b;
+}
+
+.object__body {
+  display: none;
+  padding: 0 10px;
+}
+
+.object__body.active {
+  display: block;
+}
+
+.object__title {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.object__description {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.object__body h2 {
+  font-size: 1.2em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ddd;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+/* Resources */
+
+.resource {
+  margin-bottom: 20px;
+  background-color: #4b4b4b;
+  padding: 15px 20px;
+  color: #ccc;
+}
+
+.resource__body {
+  margin: 0;
+  overflow: overlay;
+  word-break: break-word;
+}
+
+.resource__title {
+
+}
+
+.resource__parent-path {
+  color: #999;
+  font-weight: 400;
+  line-height: 37px;
+}
+
+.resource__relative-path {
+  color: #ccc;
+  line-height: 37px;
+}
+
+/* Methods */
+
+.methods {
+  float: right;
+}
+
+.method__link {
+  display: block;
+  float: left;
+  margin-left: 5px;
+}
+
+.method__badge {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  padding: 10px 15px;
+  text-decoration: none;
+  min-width: 80px;
+  background-color: #f7ad41;
+  white-space: nowrap;
+}
+
+.method__badge:hover {
+  opacity: 0.9;
+}
+
+/* Modal */
+
+.b-modal {
+  position: fixed;
+  z-index: 1070;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow-y: auto;
+  height: 100%;
+}
+
+.b-modal:focus {
+  outline: none;
+}
+
+.b-modal.active {
+  display: block;
+}
+
+.b-modal__body {
+  background-color: #fff;
+  padding: 0 10px 20px;
+  width: 100%;
+  width: calc(100% - 20px);
+  max-width: 900px;
+  position: absolute;
+  z-index: 1080;
+  top: 100px;
+  left: 50%;
+  margin-bottom: 50px;
+  transform: translateX(-50%);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.b-modal__header {
+  padding: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.b-model__close-btn {
+  background: none;
+  border: none;
+  float: right;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  filter: alpha(opacity=20);
+  opacity: .2;
+  cursor: pointer;
+}
+
+.b-model__close-btn:hover {
+  opacity: .6;
+}
+
+.b-model__close-btn:focus {
+  outline: 0;
+}
+
+.b-model__title {
+  margin: 10px 0 0;
+}
+
+.b-model__badge {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  padding: 10px 15px;
+  text-decoration: none;
+  min-width: 80px;
+  background-color: #f7ad41;
+  white-space: nowrap;
+}
+
+.b-model__parent-path {
+  color: #999;
+  font-weight: 400;
+}
+
+.b-model__relative-path {
+  color: #5b5b5b;
+}
+
+  </style><div><div class="rest"><div class="rest__header"><h1 class="rest__title">Pomodoro API API documentation <small>version v1</small></h1><p class="rest__base-uri">http://127.0.0.1:8000/api</p></div><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#auth">/auth</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#user">/user</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#task">/task</a></li></ul><div class="clear"></div><div class="objects"><div class="object__body active" id="auth"><h3 class="object__title">/auth</h3><div class="resource"><div><h4 class="resource__body"><span class="resource__parent-path">/auth</span><span class="resource__relative-path">/login</span> <span class="methods"><a class="method__link" href="#auth_login_post"><span class="method__badge badge_post">post</span></a><div class="clear"></div></span></h4></div><div class="b-modal" tabindex="0" id="auth_login_post"><div class="b-modal__body"><div class="b-modal__header"><button type="button" class="b-model__close-btn" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="b-model__title" id="myModalLabel"><span class="b-model__badge badge_post">post</span> <span class="b-model__parent-path">/auth</span><span class="b-model__relative-path">/login</span></h4></div><div class="b-modal-content"><blockquote><p>Log-in a user using it&#39;s credentials.</p></blockquote><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#auth_login_post_request">Request</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#auth_login_post_response">Response</a></li></ul><div class="objects"><div class="object__body active" id="auth_login_post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "email": "test@test.com",
+  "password": "Test1234"
+}
+</code></pre></div></div><div class="object__body" id="auth_login_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>User logged in with correct credentials.</p><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+  "email": "test@email.com",
+  "password":null,
+  "name": "Test",
+  "tasks": [],
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/" target="_blank"></a></h2></div></div></div></div></div></div><div class="resource"><div><h4 class="resource__body"><span class="resource__parent-path">/auth</span><span class="resource__relative-path">/signup</span> <span class="methods"><a class="method__link" href="#auth_signup_post"><span class="method__badge badge_post">post</span></a><div class="clear"></div></span></h4></div><div class="b-modal" tabindex="0" id="auth_signup_post"><div class="b-modal__body"><div class="b-modal__header"><button type="button" class="b-model__close-btn" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="b-model__title" id="myModalLabel"><span class="b-model__badge badge_post">post</span> <span class="b-model__parent-path">/auth</span><span class="b-model__relative-path">/signup</span></h4></div><div class="b-modal-content"><blockquote><p>Allows to create account</p></blockquote><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#auth_signup_post_request">Request</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#auth_signup_post_response">Response</a></li></ul><div class="objects"><div class="object__body active" id="auth_signup_post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "email": "test@test.com",
+  "name": "Test",
+  "password": "Azerty"
+}
+</code></pre></div></div><div class="object__body" id="auth_signup_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>User created.</p><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+  "email": "test@email.com",
+  "password":null,
+  "name": "Test",
+  "tasks": [],
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/" target="_blank"></a></h2></div></div></div></div></div></div><div class="resource"><div><h4 class="resource__body"><span class="resource__parent-path">/auth</span><span class="resource__relative-path">/me</span> <span class="methods"><a class="method__link" href="#auth_me_get"><span class="method__badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a> <a class="method__link" href="#auth_me_get"><span class="method__badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a><div class="clear"></div></span></h4></div><div class="b-modal" tabindex="0" id="auth_me_get"><div class="b-modal__body"><div class="b-modal__header"><button type="button" class="b-model__close-btn" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="b-model__title" id="myModalLabel"><span class="b-model__badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="b-model__parent-path">/auth</span><span class="b-model__relative-path">/me</span></h4></div><div class="b-modal-content"><blockquote><p>Get user informations.</p></blockquote><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>cookie-auth</b><p>Custom authentication scheme for jwt cookie.</p></div><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#auth_me_get_response">Response</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#auth_me_get_securedby">Security</a></li></ul><div class="objects"><div class="object__body active" id="auth_me_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>User informations who is logged .</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+  "email": "test@email.com",
+  "password":null,
+  "name": "Test",
+  "tasks": [],
+}
+</code></pre></div></div><div class="object__body" id="auth_me_get_securedby"><h1>Secured by cookie-auth</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul></div></div></div></div></div><div class="b-modal" tabindex="0" id="auth_me_get"><div class="b-modal__body"><div class="b-modal__header"><button type="button" class="b-model__close-btn" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="b-model__title" id="myModalLabel"><span class="b-model__badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="b-model__parent-path">/auth</span><span class="b-model__relative-path">/me</span></h4></div><div class="b-modal-content"><blockquote><p>Log out a user using it&#39;s JWT.</p></blockquote><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>cookie-auth</b><p>Custom authentication scheme for jwt cookie.</p></div><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#auth_me_get_response">Response</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#auth_me_get_securedby">Security</a></li></ul><div class="objects"><div class="object__body active" id="auth_me_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>No user logged.</p><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>Not logged</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: any</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>[object Object]</code></pre></div></div><div class="object__body" id="auth_me_get_securedby"><h1>Secured by cookie-auth</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul></div></div></div></div></div></div></div><div class="object__body" id="user"><h3 class="object__title">/user</h3><div class="resource"><div><h4 class="resource__body"><span class="resource__parent-path">/user</span><span class="resource__relative-path">/</span> <span class="methods"><a class="method__link" href="#user__post"><span class="method__badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a><div class="clear"></div></span></h4></div><div class="b-modal" tabindex="0" id="user__post"><div class="b-modal__body"><div class="b-modal__header"><button type="button" class="b-model__close-btn" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="b-model__title" id="myModalLabel"><span class="b-model__badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="b-model__parent-path">/user</span><span class="b-model__relative-path">/</span></h4></div><div class="b-modal-content"><blockquote><p>update email and name of an user.</p></blockquote><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>cookie-auth</b><p>Custom authentication scheme for jwt cookie.</p></div><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#user__post_response">Response</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#user__post_securedby">Security</a></li></ul><div class="objects"><div class="object__body active" id="user__post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>update done</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+  "email": "test@email.com",
+  "password":null,
+  "name": "Test",
+  "tasks": [],
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/" target="_blank"></a></h2></div><div class="object__body" id="user__post_securedby"><h1>Secured by cookie-auth</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul></div></div></div></div></div></div><div class="resource"><div><h4 class="resource__body"><span class="resource__parent-path">/user</span><span class="resource__relative-path">/password</span> <span class="methods"><a class="method__link" href="#user_password_post"><span class="method__badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a><div class="clear"></div></span></h4></div><div class="b-modal" tabindex="0" id="user_password_post"><div class="b-modal__body"><div class="b-modal__header"><button type="button" class="b-model__close-btn" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="b-model__title" id="myModalLabel"><span class="b-model__badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="b-model__parent-path">/user</span><span class="b-model__relative-path">/password</span></h4></div><div class="b-modal-content"><blockquote><p>update password of an user .</p></blockquote><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>cookie-auth</b><p>Custom authentication scheme for jwt cookie.</p></div><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#user_password_post_response">Response</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#user_password_post_securedby">Security</a></li></ul><div class="objects"><div class="object__body active" id="user_password_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>update done</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+  "email": "test@email.com",
+  "password":null,
+  "name": "Test",
+  "tasks": [],
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/" target="_blank"></a></h2></div><div class="object__body" id="user_password_post_securedby"><h1>Secured by cookie-auth</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul></div></div></div></div></div></div></div><div class="object__body" id="task"><h3 class="object__title">/task</h3><div class="resource"><div><h4 class="resource__body"><span class="resource__parent-path">/task</span><span class="resource__relative-path">/</span> <span class="methods"><a class="method__link" href="#task__get"><span class="method__badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a> <a class="method__link" href="#task__post"><span class="method__badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a><div class="clear"></div></span></h4></div><div class="b-modal" tabindex="0" id="task__get"><div class="b-modal__body"><div class="b-modal__header"><button type="button" class="b-model__close-btn" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="b-model__title" id="myModalLabel"><span class="b-model__badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="b-model__parent-path">/task</span><span class="b-model__relative-path">/</span></h4></div><div class="b-modal-content"><blockquote><p>Get all tasks of a user.</p></blockquote><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>cookie-auth</b><p>Custom authentication scheme for jwt cookie.</p></div><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#task__get_response">Response</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#task__get_securedby">Security</a></li></ul><div class="objects"><div class="object__body active" id="task__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>All tasks of a user.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>[
+  {
+    "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+    "title": "test",
+    "details": "test",
+    "author": {"_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                "email": "test@email.com",
+                "password":null,
+                "name": "Test",
+                "tasks": [],
+                },
+    "created_at": "2020-10-30T14:00:00.000Z",
+    "done_at": "2020-10-30T14:00:00.000Z",
+  },
+  {
+    "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+    "title": "test",
+    "details": "test",
+    "author": {"_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                "email": "test@email.com",
+                "password":null,
+                "name": "Test",
+                "tasks": [],
+                },
+    "created_at": "2020-10-30T14:00:00.000Z",
+    "done_at": "2020-10-30T14:00:00.000Z",
+  }
+]
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>Not logged</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: any</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>[object Object]</code></pre></div></div><div class="object__body" id="task__get_securedby"><h1>Secured by cookie-auth</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul></div></div></div></div></div><div class="b-modal" tabindex="0" id="task__post"><div class="b-modal__body"><div class="b-modal__header"><button type="button" class="b-model__close-btn" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="b-model__title" id="myModalLabel"><span class="b-model__badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="b-model__parent-path">/task</span><span class="b-model__relative-path">/</span></h4></div><div class="b-modal-content"><blockquote><p>Allows to create a task</p></blockquote><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>cookie-auth</b><p>Custom authentication scheme for jwt cookie.</p></div><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#task__post_request">Request</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#task__post_response">Response</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#task__post_securedby">Security</a></li></ul><div class="objects"><div class="object__body active" id="task__post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "title": "title of the task",
+  "details": "details of the task",
+}
+</code></pre></div></div><div class="object__body" id="task__post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>task created.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+  "title": "test",
+  "details": "test",
+  "author": {"_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+              "email": "test@email.com",
+              "password":null,
+              "name": "Test",
+              "tasks": [],
+              },
+  "created_at": "2020-10-30T14:00:00.000Z",
+  "done_at": "2020-10-30T14:00:00.000Z",
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/" target="_blank"></a></h2></div><div class="object__body" id="task__post_securedby"><h1>Secured by cookie-auth</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul></div></div></div></div></div></div><div class="resource"><div><h4 class="resource__body"><span class="resource__parent-path">/task</span><span class="resource__relative-path">/{taskId}</span> <span class="methods"><a class="method__link" href="#task__taskid__get"><span class="method__badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a> <a class="method__link" href="#task__taskid__post"><span class="method__badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a> <a class="method__link" href="#task__taskid__delete"><span class="method__badge badge_delete">delete <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a><div class="clear"></div></span></h4></div><div class="b-modal" tabindex="0" id="task__taskid__get"><div class="b-modal__body"><div class="b-modal__header"><button type="button" class="b-model__close-btn" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="b-model__title" id="myModalLabel"><span class="b-model__badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="b-model__parent-path">/task</span><span class="b-model__relative-path">/{taskId}</span></h4></div><div class="b-modal-content"><blockquote><p>Get a task of a user.</p></blockquote><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>cookie-auth</b><p>Custom authentication scheme for jwt cookie.</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>task-owner</b><p>Are you the owner of the task ?</p></div><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#task__taskid__get_request">Request</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#task__taskid__get_response">Response</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#task__taskid__get_securedby">Security</a></li></ul><div class="objects"><div class="object__body active" id="task__taskid__get_request"><h3>URI Parameters</h3><ul><li><strong>taskId</strong>: <em>required (string)</em></li></ul></div><div class="object__body" id="task__taskid__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>A task of a user.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+  "title": "test",
+  "details": "test",
+  "author": {"_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                "email": "test@email.com",
+                "password":null,
+                "name": "Test",
+                tasks: [],
+            },
+  "created_at": "2020-10-30T14:00:00.000Z",
+  "done_at": "2020-10-30T14:00:00.000Z",
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>Not logged</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: any</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>[object Object]</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/405" target="_blank">405</a></h2><p>Not the owner of the task</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: any</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>[object Object]</code></pre></div></div><div class="object__body" id="task__taskid__get_securedby"><h1>Secured by cookie-auth</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul><h1>Secured by task-owner</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul></div></div></div></div></div><div class="b-modal" tabindex="0" id="task__taskid__post"><div class="b-modal__body"><div class="b-modal__header"><button type="button" class="b-model__close-btn" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="b-model__title" id="myModalLabel"><span class="b-model__badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="b-model__parent-path">/task</span><span class="b-model__relative-path">/{taskId}</span></h4></div><div class="b-modal-content"><blockquote><p>Allows to update a task</p></blockquote><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>cookie-auth</b><p>Custom authentication scheme for jwt cookie.</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>task-owner</b><p>Are you the owner of the task ?</p></div><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#task__taskid__post_request">Request</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#task__taskid__post_response">Response</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#task__taskid__post_securedby">Security</a></li></ul><div class="objects"><div class="object__body active" id="task__taskid__post_request"><h3>URI Parameters</h3><ul><li><strong>taskId</strong>: <em>required (string)</em></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "title": "title of the task",
+  "details": "details of the task",
+}
+</code></pre></div></div><div class="object__body" id="task__taskid__post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>task updated.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+  "title": "test",
+  "details": "test",
+  "author": {"_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                "email": "test@email.com",
+                "password":null,
+                "name": "Test",
+                tasks: [],
+            },
+  "created_at": "2020-10-30T14:00:00.000Z",
+  "done_at": "2020-10-30T14:00:00.000Z",
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>Not logged</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: any</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>[object Object]</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/405" target="_blank">405</a></h2><p>Not the owner of the task</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: any</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>[object Object]</code></pre></div></div><div class="object__body" id="task__taskid__post_securedby"><h1>Secured by cookie-auth</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul><h1>Secured by task-owner</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul></div></div></div></div></div><div class="b-modal" tabindex="0" id="task__taskid__delete"><div class="b-modal__body"><div class="b-modal__header"><button type="button" class="b-model__close-btn" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="b-model__title" id="myModalLabel"><span class="b-model__badge badge_delete">delete <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="b-model__parent-path">/task</span><span class="b-model__relative-path">/{taskId}</span></h4></div><div class="b-modal-content"><blockquote><p>Delete a task of a user.</p></blockquote><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>cookie-auth</b><p>Custom authentication scheme for jwt cookie.</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>task-owner</b><p>Are you the owner of the task ?</p></div><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#task__taskid__delete_request">Request</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#task__taskid__delete_response">Response</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#task__taskid__delete_securedby">Security</a></li></ul><div class="objects"><div class="object__body active" id="task__taskid__delete_request"><h3>URI Parameters</h3><ul><li><strong>taskId</strong>: <em>required (string)</em></li></ul></div><div class="object__body" id="task__taskid__delete_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>task deleted.</p><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>Not logged</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: any</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>[object Object]</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/405" target="_blank">405</a></h2><p>Not the owner of the task</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: any</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>[object Object]</code></pre></div></div><div class="object__body" id="task__taskid__delete_securedby"><h1>Secured by cookie-auth</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul><h1>Secured by task-owner</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul></div></div></div></div></div></div><div class="resource"><div><h4 class="resource__body"><span class="resource__parent-path">/task</span><span class="resource__relative-path">/toggle/{taskId}</span> <span class="methods"><a class="method__link" href="#task_toggle__taskid__post"><span class="method__badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a><div class="clear"></div></span></h4></div><div class="b-modal" tabindex="0" id="task_toggle__taskid__post"><div class="b-modal__body"><div class="b-modal__header"><button type="button" class="b-model__close-btn" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="b-model__title" id="myModalLabel"><span class="b-model__badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="b-model__parent-path">/task</span><span class="b-model__relative-path">/toggle/{taskId}</span></h4></div><div class="b-modal-content"><blockquote><p>Allows to toggle the done_at of a task</p></blockquote><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>cookie-auth</b><p>Custom authentication scheme for jwt cookie.</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>task-owner</b><p>Are you the owner of the task ?</p></div><ul class="rest-nav"><li class="rest-nav__item active"><a class="rest-nav__link" href="#task_toggle__taskid__post_request">Request</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#task_toggle__taskid__post_response">Response</a></li><li class="rest-nav__item"><a class="rest-nav__link" href="#task_toggle__taskid__post_securedby">Security</a></li></ul><div class="objects"><div class="object__body active" id="task_toggle__taskid__post_request"><h3>URI Parameters</h3><ul><li><strong>taskId</strong>: <em>required (string)</em></li></ul></div><div class="object__body" id="task_toggle__taskid__post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>task toggled.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+  "title": "test",
+  "details": "test",
+  "author": {"_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                "email": "test@email.com",
+                "password":null,
+                "name": "Test",
+                tasks: [],
+            },
+  "created_at": "2020-10-30T14:00:00.000Z",
+  "done_at": "2020-10-30T14:00:00.000Z",
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>Not logged</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: any</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>[object Object]</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/405" target="_blank">405</a></h2><p>Not the owner of the task</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: any</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>[object Object]</code></pre></div></div><div class="object__body" id="task_toggle__taskid__post_securedby"><h1>Secured by cookie-auth</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul><h1>Secured by task-owner</h1><h3>Headers</h3><ul><li><strong>Cookie</strong>: <em>required (string)</em><p>jwt</p></li></ul></div></div></div></div></div></div></div></div></div></div><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css"><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script><script>
+    if(!window.$) {
+      document.write('<script\
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"\
+        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="\
+        crossorigin="anonymous"></scr' + 'ipt>');
+    }
+  </script><script>
+    "use strict";
+
+(function () {
+  $('.rest pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+
+  $('.rest-nav__item').click(function() {
+    $(this).siblings().removeClass('active');
+    $(this).addClass('active');
+  });
+
+  function turnMenuItemById(id) {
+    $('.rest-nav__link[href$="' + id + '"]')
+      .parent()
+      .addClass('active')
+      .siblings()
+      .removeClass('active');
+  }
+
+  $(window).bind('hashchange', function() {
+    var hash = document.location.hash;
+    var element = $(hash);
+    var parents = element.parents(":hidden");
+
+    turnMenuItemById(hash);
+
+    $.each(parents, function(index, parent) {
+      var id = $(parent).attr('id');
+
+      if (id) {
+        turnMenuItemById(id);
+      }
+    });
+
+    parents
+      .addClass('active')
+      .siblings()
+      .removeClass('active');
+
+    element
+      .siblings()
+      .removeClass('active');
+
+    element.addClass('active');
+  });
+
+  $(window).trigger('hashchange');
+
+
+  //Close popup by click
+   $('.b-model__close-btn').click(function () {
+       closePopup();
+   });
+
+   //Close popup by press Escape
+  document.onkeydown = function(evt) {
+      evt = evt || window.event;
+      var isEscape = false;
+      if ("key" in evt) {
+          isEscape = (evt.key == "Escape" || evt.key == "Esc");
+      } else {
+          isEscape = (evt.keyCode == 27);
+      }
+      if (isEscape) {
+          console.log("ESC");
+          closePopup();
+      }
+  };
+
+  function closePopup() {
+      console.log("close");
+
+      $('.b-model__close-btn')
+          .parents('.b-modal')
+          .removeClass('active');
+
+      document.location.hash = '';
+  }
+})();
+  </script></div>

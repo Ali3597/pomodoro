@@ -10,7 +10,6 @@ const taskSchema = new mongoose.Schema({
     author: { type: schema.Types.ObjectId, ref: "user", required: true },
 });
 
-// taskSchema.add({ subTasks: [taskSchema] })
 
 
 

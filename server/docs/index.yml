@@ -1,0 +1,530 @@
+#%RAML 1.0
+---
+title: Pomodoro API
+baseUri: http://127.0.0.1:8000/api
+mediaType: application/json
+version: v1
+protocols: [HTTP]
+
+/auth:
+  /login:
+    post:
+      description: Log-in a user using it's credentials.
+      body:
+        application/json:
+          type: object
+          example: |
+            {
+              "email": "test@test.com",
+              "password": "Test1234"
+            }
+      responses:
+        200:
+          description: User logged in with correct credentials.
+          headers:
+            Cookie:
+              description: |
+                jwt
+              type: string
+              example:
+          body:
+            application/json:
+              type: object
+              example: |
+                {
+                  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                  "email": "test@email.com",
+                  "password":null,
+                  "name": "Test",
+                  "tasks": [],
+                }
+        404:
+          description: User not found
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "password",
+                  "message": "Mauvais identifiants"
+                }]}
+        404:
+          description: Already logged in
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message": "Your are  logged in"
+                }]}
+
+
+  /signup:
+    post:
+      description: Allows to create account
+      body:
+        application/json:
+          type: object
+          example: |
+            {
+              "email": "test@test.com",
+              "name": "Test",
+              "password": "Azerty"
+            }
+      responses:
+        200:
+          description: User created.
+          headers:
+            Cookie:
+              description: |
+                jwt
+              type: string
+              example:
+          body:
+            application/json:
+              type: object
+              example: |
+                {
+                  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                  "email": "test@email.com",
+                  "password":null,
+                  "name": "Test",
+                  "tasks": [],
+                }
+        404:
+          description: Error with the passed parameters.
+          body:
+            application/json:
+              type: object
+              example: |
+                {"errors":[
+                  {
+                  "field":  "email",
+                  "message": " Veuillez renseignez un email valide"
+                },
+                {
+                  "field": "password",
+                  "message": "Le mot de passe doit être au minimum de 6 caractères"
+                }
+                ]}
+        404:
+          description: Already logged in
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message": "Your are  logged in"
+                }]}
+  /me:
+    get:
+      description: Get user informations.
+      securedBy: [ cookie-auth ]
+      responses:
+        200:
+          description: User informations who is logged .
+          body:
+            application/json:
+              type: object
+              example: |
+                {
+                  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                  "email": "test@email.com",
+                  "password":null,
+                  "name": "Test",
+                  "tasks": [],
+                }
+        200
+          description: No user logged.
+  /logout:
+    get:
+      description: Log out a user using it's JWT.
+      securedBy: [ cookie-auth ]
+      responses:
+        200:
+          description: No user logged.
+        404:
+          description: Not logged
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message": ""Your are not logged in""
+                }]}
+
+/user:
+  /: 
+    post:
+      description: update email and name of an user.
+      securedBy: [ cookie-auth ]
+      responses:
+        200:
+          description: update done
+          body:
+            application/json:
+              type: object
+              example: |
+                {
+                  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                  "email": "test@email.com",
+                  "password":null,
+                  "name": "Test",
+                  "tasks": [],
+                }
+        404:
+          description: Error with the passed parameters.
+          body:
+            application/json:
+              type: object
+              example: |
+                {"errors":[
+                  {
+                  "field":  "email",
+                  "message": " Veuillez renseignez un email valide"
+                },
+                {
+                  "field": "name",
+                  "message": "Le  nom n'est pas valide"
+                }
+                ]}
+        404:
+          description: Not logged
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message": ""Your are not logged in""
+                }]}
+  /password: 
+    post:
+      description: update password of an user .
+      securedBy: [ cookie-auth ]
+      responses:
+        200:
+          description: update done
+          body:
+            application/json:
+              type: object
+              example: |
+                {
+                  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                  "email": "test@email.com",
+                  "password":null,
+                  "name": "Test",
+                  "tasks": [],
+                }
+        404:
+          description: Error with the passed parameters.
+          body:
+            application/json:
+              type: object
+              example: |
+                {"errors":[
+                  {
+                  "field":  "password",
+                  "message": "Le mot de passe doit être au minimum de 6 caractères"
+                },
+                ]}
+        404:
+          description: Not logged
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message": ""Your are not logged in""
+                }]}
+/task:
+  /:
+    get:
+      description: Get all tasks of a user.
+      securedBy: [ cookie-auth ]
+      responses:
+        200:
+          description: All tasks of a user.
+          body:
+            application/json:
+              type: object
+              example: |
+                [
+                  {
+                    "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                    "title": "test",
+                    "details": "test",
+                    "author": {"_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                                "email": "test@email.com",
+                                "password":null,
+                                "name": "Test",
+                                "tasks": [],
+                                },
+                    "created_at": "2020-10-30T14:00:00.000Z",
+                    "done_at": "2020-10-30T14:00:00.000Z",
+                  },
+                  {
+                    "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                    "title": "test",
+                    "details": "test",
+                    "author": {"_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                                "email": "test@email.com",
+                                "password":null,
+                                "name": "Test",
+                                "tasks": [],
+                                },
+                    "created_at": "2020-10-30T14:00:00.000Z",
+                    "done_at": "2020-10-30T14:00:00.000Z",
+                  }
+                ]
+        404:
+          description: Not logged
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message": ""Your are not logged in""
+                }]}
+    post:
+      description: Allows to create  a task
+      securedBy: [ cookie-auth ]
+      body:
+        application/json:
+          type: object
+          example: |
+            {
+              "title": "title of the task",
+              "details": "details of the task",
+            }
+      responses:
+        200:
+          description: task created.
+          body:
+            application/json:
+              type: object
+              example: |
+                {
+                  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                  "title": "test",
+                  "details": "test",
+                  "author": {"_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                              "email": "test@email.com",
+                              "password":null,
+                              "name": "Test",
+                              "tasks": [],
+                              },
+                  "created_at": "2020-10-30T14:00:00.000Z",
+                  "done_at": "2020-10-30T14:00:00.000Z",
+                }
+        404:
+          description: Error with the passed parameters.
+          body:
+            application/json:
+              type: object
+              example: |
+                {"errors":[
+                  {
+                  "field":  "title",
+                  "message": "Le titre n'est pas valide"
+                },
+                {
+                  "field": "details",
+                  "message": "Les details  ne sont  pas valide"
+                }
+                ]}
+        404:
+          description: Not logged
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message": ""Your are not logged in""
+                }]}
+
+  /{taskId}:
+    get:
+      description: Get a task of a user.
+      securedBy: [ cookie-auth, task-owner ]
+      responses:
+        200:
+          description: A task of a user.
+          body:
+            application/json:
+              type: object
+              example: |
+                {
+                  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                  "title": "test",
+                  "details": "test",
+                  "author": {"_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                                "email": "test@email.com",
+                                "password":null,
+                                "name": "Test",
+                                tasks: [],
+                            },
+                  "created_at": "2020-10-30T14:00:00.000Z",
+                  "done_at": "2020-10-30T14:00:00.000Z",
+                }
+        405:
+          description: Not the owner of the task
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message":"Your are not allowed"
+                }]}
+        404:
+          description: Not logged
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message": ""Your are not logged in""
+                }]}
+    post:
+      description: Allows to update a task
+      securedBy: [ cookie-auth, task-owner ]
+      body:
+        application/json:
+          type: object
+          example: |
+            {
+              "title": "title of the task",
+              "details": "details of the task",
+            }
+      responses:
+        200:
+          description: task updated.
+          body:
+            application/json:
+              type: object
+              example: |
+                {
+                  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                  "title": "test",
+                  "details": "test",
+                  "author": {"_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                                "email": "test@email.com",
+                                "password":null,
+                                "name": "Test",
+                                tasks: [],
+                            },
+                  "created_at": "2020-10-30T14:00:00.000Z",
+                  "done_at": "2020-10-30T14:00:00.000Z",
+                }
+        405:
+          description: Not the owner of the task
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message":"Your are not allowed"
+                }]}
+        404:
+          description: Not logged
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message": ""Your are not logged in""
+                }]}
+    delete:
+      description: Delete a task of a user.
+      securedBy: [ cookie-auth, task-owner ]
+      responses:
+        200:
+          description: task deleted.
+        405:
+          description: Not the owner of the task
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message":"Your are not allowed"
+                }]}
+        404:
+          description: Not logged
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message": ""Your are not logged in""
+                }]}
+
+  /toggle/{taskId}:
+    post:
+      description: Allows to toggle the done_at of a task
+      securedBy: [ cookie-auth, task-owner ]
+      responses:
+        200:
+          description: task toggled.
+          body:
+            application/json:
+              type: object
+              example: |
+                {
+                  "_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                  "title": "test",
+                  "details": "test",
+                  "author": {"_id": "5f9b3b3b9b0b3c1b1c3b1b1b",
+                                "email": "test@email.com",
+                                "password":null,
+                                "name": "Test",
+                                tasks: [],
+                            },
+                  "created_at": "2020-10-30T14:00:00.000Z",
+                  "done_at": "2020-10-30T14:00:00.000Z",
+                }
+        405:
+          description: Not the owner of the task
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message":"Your are not allowed"
+                }]}
+        404:
+          description: Not logged
+          body:
+            application/json:
+              example: |
+              {"errors":[  {
+                  "field": "error",
+                  "message": ""Your are not logged in""
+                }]}
+
+
+
+
+
+
+securitySchemes:
+  cookie-auth:
+    description: |
+      Custom authentication scheme for jwt cookie.
+    type:
+      x-custom
+    describedBy:
+      headers:
+        Cookie:
+          description: |
+            jwt
+          type: string
+  task-owner:
+    description: |
+      Are you the owner of the task ? 
+    type:
+      x-custom
+    describedBy:
+      headers:
+        Cookie:
+          description: |
+            jwt
+          type: string
