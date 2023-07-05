@@ -14,7 +14,7 @@ export const login = async (req: Request, res: Response, _: NextFunction) => {
       const match = user.comparePassword(password);
       if (match) {
         req.login(user);
-        res.status(200).send(user.set("password", null));
+        res.status(200).json(user.set("password", null));
       } else {
         res.status(404).send({"errors":[{ field: "password", message: "Mauvais identifiants" }]});
       }
@@ -29,9 +29,9 @@ export const login = async (req: Request, res: Response, _: NextFunction) => {
 export const me = async (req: Request, res: Response) => {
   try {
     if (req.user) {
-      res.send(req.user.set("password", null));
+      res.json(req.user.set("password", null));
     } else {
-      res.status(200).send();
+      res.status(200).json(null);
     }
   } catch (error) {
     res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
@@ -41,7 +41,7 @@ export const me = async (req: Request, res: Response) => {
 export const signout = async (req: Request, res: Response, _: NextFunction) => {
   try {
     req.logout();
-    res.status(200).send();
+    res.status(200).json(null);
   } catch (error) {
     res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
   }
@@ -55,7 +55,7 @@ export const signup = async (req: Request, res: Response, _: NextFunction) => {
     const body = req.body;
     const user = await createUser(body);
     req.login(user);
-    res.status(200).send(user.set("password", null))
+    res.status(200).json(user.set("password", null))
   } catch (e) {
 
     const errors = [];

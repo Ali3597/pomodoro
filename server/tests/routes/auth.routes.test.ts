@@ -120,7 +120,7 @@ describe("me", () => {
     const resp = await request(app).get("/api/auth/me")
       .send()
     expect(resp.statusCode).toBe(200)
-    expect(resp.body).toEqual({})
+    expect(resp.body).toEqual(null)
   });
 
 

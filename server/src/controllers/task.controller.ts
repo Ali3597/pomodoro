@@ -11,7 +11,7 @@ export const getMyTasks = async (req: Request, res: Response) => {
         order = order == "ASC" ? 1 : -1
         const tasks = await findLimitedTasksByUserId(req.user._id, order)
 
-        res.status(200).send(tasks);
+        res.status(200).json(tasks);
     } catch (e) {
         res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
     }
@@ -23,7 +23,7 @@ export const getOneTask = async (req: Request, res: Response) => {
         const taskId = req.params.taskId;
         const task = await getOneTaskById(new mongoose.Types.ObjectId(taskId.trim()))
         if (task) {
-            res.status(200).send(task);
+            res.status(200).json(task);
         } else {
 
             res.status(404).send({"errors":[{ field: "error", message: "Aucune tâche trouvé" }]});
@@ -46,7 +46,7 @@ export const createTask = async (req: Request, res: Response) => {
         const { title, details } = req.body
 
         const newTask = await createNewTask(req.user._id, title, details)
-        res.status(200).send(newTask);
+        res.status(200).json(newTask);
 
     } catch (e) {
         const errors = [];
@@ -68,7 +68,7 @@ export const toggleTask = async (req: Request, res: Response) => {
         const task = await getOneTaskById(new mongoose.Types.ObjectId(taskId.trim()))
         if (task) {
             const task_updated = await toggleOneTask(new mongoose.Types.ObjectId(taskId.trim()), task.done_at ? null : new Date())
-            res.status(200).send(task_updated);
+            res.status(200).json(task_updated);
         } else {
             res.status(404).send({"errors":[{ field: "error", message: "Aucune tâche trouvé" }]});
         }
@@ -87,7 +87,7 @@ export const updateTask = async (req: Request, res: Response) => {
         await taskInfoValidation.validateAsync(req.body, { abortEarly: false });
         const taskId = req.params.taskId;
         const task = await updateTaskWithTaskId(new mongoose.Types.ObjectId(taskId.trim()), req.body);
-        res.status(200).send(task);
+        res.status(200).json(task);
 
     } catch (e) {
         const errors = [];
@@ -107,7 +107,7 @@ export const deleteTask = async (req: Request, res: Response) => {
     try {
         const taskId = req.params.taskId;
         await deleteTaskWithTaskId(new mongoose.Types.ObjectId(taskId.trim()))
-        res.status(200).send()
+        res.status(200).json(null)
     } catch (e) {
         res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
     }
