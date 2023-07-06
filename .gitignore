@@ -37,3 +37,6 @@
 /client/*.njsproj
 /client/*.sln
 /client/*.sw?
+
+
+/db/.env
