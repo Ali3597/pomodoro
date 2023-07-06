@@ -1,5 +1,5 @@
-import express ,{Application,  Request, Response} from "express";
-import {join} from 'path';
+import express ,{Application} from "express";
+
 import  cookieParser from 'cookie-parser';
 import  router from './routes';
 import * as dotenv from "dotenv";
@@ -16,9 +16,7 @@ import "./config/jwt.config";
 
 app.use(router);
 
-app.get('*', (_:Request, res:Response) => {
-    res.sendFile(join(__dirname, '../index.html'));
-})
+
 
 if (process.env.NODE_ENV !== 'test') {
     app.listen(process.env.PORT);

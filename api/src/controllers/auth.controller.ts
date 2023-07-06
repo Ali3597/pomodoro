@@ -28,13 +28,15 @@ export const login = async (req: Request, res: Response, _: NextFunction) => {
 
 export const me = async (req: Request, res: Response) => {
   try {
+    console.log("on passe par le me en fait ")
     if (req.user) {
       res.json(req.user.set("password", null));
     } else {
       res.status(200).json(null);
     }
   } catch (error) {
-    res.status(404).send({"errors":[{ field: "error", message: "Error" }]});
+    console.log(error)
+    res.status(405).send({"errors":[{ field: "error", message: "Error" }]});
   }
 };
 
