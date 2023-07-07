@@ -19,5 +19,5 @@ app.use(router);
 
 
 if (process.env.NODE_ENV !== 'test') {
-    app.listen(process.env.PORT);
+    app.listen(80);
 }
