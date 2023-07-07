@@ -6,5 +6,5 @@ const uri = process.env.NODE_ENV === 'production' ?
 `mongodb://db`;
 
 mongoose.connect( uri).then(() => {
-    console.log('Connected !')
+    console.log('Connected!')
 }).catch(e => console.log(e));

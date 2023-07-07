@@ -28,7 +28,6 @@ export const login = async (req: Request, res: Response, _: NextFunction) => {
 
 export const me = async (req: Request, res: Response) => {
   try {
-    console.log("on passe par le me en fait ")
     if (req.user) {
       res.json(req.user.set("password", null));
     } else {
